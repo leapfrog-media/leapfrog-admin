@@ -1,7 +1,7 @@
-// Native WordPress admin colour rules with the Native Admin Colours palette.
+// Native WordPress admin colour rules with the Leapfrog Admin palette.
 // The wordpress/ partials are from WordPress 7.1.3 (GPL-2.0-or-later).
 @use 'wordpress/admin' with (
-    $scheme-name: 'native-admin-colours',
+    $scheme-name: 'leapfrog-admin',
     $base-color: #262626,
     $body-background: #f6f5f3,
     $text-color: #ffffff,
@@ -27,10 +27,10 @@
 // WordPress 7 uses shared theme variables for buttons, checkboxes and focus rings.
 // Define them in the colour stylesheet so native profile previews update too.
 :root {
-    --wp-admin-theme-color: var(--nac-action, #b13f32);
-    --wp-admin-theme-color--rgb: var(--nac-action-rgb, 177, 63, 50);
-    --wp-admin-theme-color-darker-10: var(--nac-action-hover-10, #9f382d);
-    --wp-admin-theme-color-darker-20: var(--nac-action-hover-20, #8f3026);
+    --wp-admin-theme-color: var(--lfa-action, #b13f32);
+    --wp-admin-theme-color--rgb: var(--lfa-action-rgb, 177, 63, 50);
+    --wp-admin-theme-color-darker-10: var(--lfa-action-hover-10, #9f382d);
+    --wp-admin-theme-color-darker-20: var(--lfa-action-hover-20, #8f3026);
 }
 
 // A saved Adminify background gradient can remain even with its UI switched off.
@@ -73,7 +73,7 @@ body.wp-admin {
 #wpadminbar #wp-admin-bar-site-name a.ab-item,
 #wpadminbar .ab-icon:before,
 #wpadminbar .ab-item:before {
-    color: var(--nac-menu-text, #ffffff);
+    color: var(--lfa-menu-text, #ffffff);
 }
 
 #adminmenu li a:focus,
@@ -81,19 +81,19 @@ body.wp-admin {
 #adminmenu li.opensub > a.menu-top,
 #adminmenu li:hover div.wp-menu-image:before,
 #adminmenu li a:focus div.wp-menu-image:before {
-    color: var(--nac-accent-ink, #262626);
+    color: var(--lfa-accent-ink, #262626);
 }
 
 #adminmenu .wp-submenu a,
 #adminmenu .wp-submenu a:focus,
 #adminmenu .wp-submenu a:hover {
-    color: var(--nac-menu-text, #ffffff);
+    color: var(--lfa-menu-text, #ffffff);
 }
 
 #adminmenu .wp-submenu li.current a,
 #adminmenu .wp-submenu a:focus,
 #adminmenu .wp-submenu a:hover {
-    color: var(--nac-accent-hover, #ff9b90);
+    color: var(--lfa-accent-hover, #ff9b90);
 }
 
 #adminmenu a.wp-has-current-submenu,
@@ -102,38 +102,38 @@ body.wp-admin {
 #adminmenu .wp-has-current-submenu div.wp-menu-image:before,
 #adminmenu .awaiting-mod,
 #adminmenu .update-plugins {
-    color: var(--nac-accent-ink, #262626);
+    color: var(--lfa-accent-ink, #262626);
 }
 
 #adminmenu .current .awaiting-mod,
 #adminmenu .current .update-plugins,
 #adminmenu .wp-has-current-submenu .awaiting-mod,
 #adminmenu .wp-has-current-submenu .update-plugins {
-    background: var(--nac-nav, #262626);
-    color: var(--nac-menu-text, #ffffff);
+    background: var(--lfa-nav, #262626);
+    color: var(--lfa-menu-text, #ffffff);
 }
 
 .wp-core-ui .button-primary,
 .wp-core-ui .button-primary:hover,
 .wp-core-ui .button-primary:focus,
 .wp-core-ui .button-primary:active {
-    color: var(--nac-action-ink, #ffffff);
+    color: var(--lfa-action-ink, #ffffff);
 }
 
 .wp-core-ui .button-secondary,
 .wp-core-ui .button-secondary:hover,
 .wp-core-ui .button-secondary:focus {
-    color: var(--nac-link, #b13f32);
+    color: var(--lfa-link, #b13f32);
 }
 
 // Independent toolbar, submenu and active plugin colours.
-#wpadminbar { background: var(--nac-toolbar, #262626); }
+#wpadminbar { background: var(--lfa-toolbar, #262626); }
 #wpadminbar, #wpadminbar .ab-item, #wpadminbar a.ab-item,
 #wpadminbar > #wp-toolbar span.ab-label,
 #wpadminbar #wp-admin-bar-my-sites a.ab-item,
 #wpadminbar #wp-admin-bar-site-name a.ab-item,
 #wpadminbar .ab-icon:before, #wpadminbar .ab-item:before {
-    color: var(--nac-toolbar-text, #fff);
+    color: var(--lfa-toolbar-text, #fff);
 }
 #wpadminbar .menupop .ab-sub-wrapper,
 #wpadminbar .shortlink-input,
@@ -141,74 +141,74 @@ body.wp-admin {
 #wpadminbar.nojq .quicklinks .ab-top-menu > li > .ab-item:focus,
 #wpadminbar.nojs .ab-top-menu > li.menupop:hover > .ab-item,
 #wpadminbar:not(.mobile) .ab-top-menu > li:hover > .ab-item {
-    background: var(--nac-toolbar-surface, #1e1e1e);
+    background: var(--lfa-toolbar-surface, #1e1e1e);
 }
 #wpadminbar .ab-top-menu > li:hover > .ab-item,
 #wpadminbar .ab-top-menu > li.hover > .ab-item,
 #wpadminbar .ab-top-menu > li > .ab-item:focus,
 #wpadminbar .quicklinks .menupop ul li a:hover,
 #wpadminbar .quicklinks .menupop ul li a:focus {
-    color: var(--nac-toolbar-hover, #fff);
+    color: var(--lfa-toolbar-hover, #fff);
 }
 // Top-level highlighted text has its own setting, including nested labels and
 // icon glyphs that otherwise retain independently assigned colours.
 #wpadminbar #wp-toolbar .ab-top-menu > li:is(:hover, .hover, :focus-within) > .ab-item {
-    background: var(--nac-toolbar-surface, #1e1e1e);
-    color: var(--nac-toolbar-focus-text, #fff);
+    background: var(--lfa-toolbar-surface, #1e1e1e);
+    color: var(--lfa-toolbar-focus-text, #fff);
 }
 #wpadminbar #wp-toolbar .ab-top-menu > li:is(:hover, .hover, :focus-within) > .ab-item .ab-label,
 #wpadminbar #wp-toolbar .ab-top-menu > li:is(:hover, .hover, :focus-within) > .ab-item .ab-icon,
 #wpadminbar #wp-toolbar .ab-top-menu > li:is(:hover, .hover, :focus-within) > .ab-item::before,
 #wpadminbar #wp-toolbar .ab-top-menu > li:is(:hover, .hover, :focus-within) > .ab-item .ab-icon::before {
-    color: var(--nac-toolbar-focus-text, #fff);
+    color: var(--lfa-toolbar-focus-text, #fff);
 }
-#adminmenu .wp-submenu a { color: var(--nac-submenu-text, #fff); }
+#adminmenu .wp-submenu a { color: var(--lfa-submenu-text, #fff); }
 #adminmenu .wp-submenu li.current a,
 #adminmenu .wp-submenu a:focus,
-#adminmenu .wp-submenu a:hover { color: var(--nac-submenu-hover, #fff); }
+#adminmenu .wp-submenu a:hover { color: var(--lfa-submenu-hover, #fff); }
 // Keep current sidebar items and temporary hover/focus highlights independent.
 #adminmenu > li:is(.current, .wp-has-current-submenu) > a.menu-top,
 #adminmenu > li:is(.current, .wp-has-current-submenu) > a.menu-top .wp-menu-name,
 #adminmenu > li:is(.current, .wp-has-current-submenu) > a.menu-top .wp-menu-image::before {
-    color: var(--nac-menu-selected-text, #fff);
+    color: var(--lfa-menu-selected-text, #fff);
 }
 #adminmenu > li > a.menu-top:is(:hover, :focus, :active),
 #adminmenu > li.opensub > a.menu-top {
-    color: var(--nac-menu-focus-text, #fff);
-    background-color: var(--nac-accent, #ff6f60);
+    color: var(--lfa-menu-focus-text, #fff);
+    background-color: var(--lfa-accent, #ff6f60);
 }
 #adminmenu > li > a.menu-top:is(:hover, :focus, :active) .wp-menu-name,
 #adminmenu > li > a.menu-top:is(:hover, :focus, :active) .wp-menu-image::before,
 #adminmenu > li:is(.current, .wp-has-current-submenu) > a.menu-top:is(:hover, :focus, :active) .wp-menu-image::before,
 #adminmenu > li.opensub > a.menu-top .wp-menu-name,
 #adminmenu > li.opensub > a.menu-top .wp-menu-image::before {
-    color: var(--nac-menu-focus-text, #fff);
+    color: var(--lfa-menu-focus-text, #fff);
 }
 #adminmenu a.menu-top, #adminmenu .wp-submenu a, #collapse-button {
-    font-size: var(--nac-menu-font-size, 13px);
+    font-size: var(--lfa-menu-font-size, 13px);
 }
 .wp-core-ui .button, .wp-core-ui .button-primary, .wp-core-ui .button-secondary {
-    border-radius: var(--nac-button-radius, 3px);
+    border-radius: var(--lfa-button-radius, 3px);
 }
 .plugins .active td, .plugins .active th {
-    background: var(--nac-active-plugin, #f0f6fc);
-    color: var(--nac-active-plugin-ink, #161616);
+    background: var(--lfa-active-plugin, #f0f6fc);
+    color: var(--lfa-active-plugin-ink, #161616);
 }
 // Keep native mobile and collapsed navigation dimensions.
 @media screen and (min-width: 961px) {
     body:not(.folded) #adminmenu,
     body:not(.folded) #adminmenuwrap,
-    body:not(.folded) #adminmenuback { width: var(--nac-menu-width, 160px); }
+    body:not(.folded) #adminmenuback { width: var(--lfa-menu-width, 160px); }
     // Both the open inline panel and hover flyouts follow the sidebar width.
     body:not(.folded) #adminmenu .wp-submenu {
-        width: var(--nac-menu-width, 160px);
-        min-width: var(--nac-menu-width, 160px);
+        width: var(--lfa-menu-width, 160px);
+        min-width: var(--lfa-menu-width, 160px);
         box-sizing: border-box;
     }
     body:not(.folded) #wpcontent,
-    body:not(.folded) #wpfooter { margin-left: var(--nac-menu-width, 160px); }
-    body:not(.folded) #adminmenu li:not(.wp-has-current-submenu) > .wp-submenu { left: var(--nac-menu-width, 160px); }
+    body:not(.folded) #wpfooter { margin-left: var(--lfa-menu-width, 160px); }
+    body:not(.folded) #adminmenu li:not(.wp-has-current-submenu) > .wp-submenu { left: var(--lfa-menu-width, 160px); }
     body.rtl:not(.folded) #wpcontent,
-    body.rtl:not(.folded) #wpfooter { margin-left: 0; margin-right: var(--nac-menu-width, 160px); }
-    body.rtl:not(.folded) #adminmenu li:not(.wp-has-current-submenu) > .wp-submenu { left: auto; right: var(--nac-menu-width, 160px); }
+    body.rtl:not(.folded) #wpfooter { margin-left: 0; margin-right: var(--lfa-menu-width, 160px); }
+    body.rtl:not(.folded) #adminmenu li:not(.wp-has-current-submenu) > .wp-submenu { left: auto; right: var(--lfa-menu-width, 160px); }
 }

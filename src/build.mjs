@@ -8,28 +8,28 @@ const selectorParser = require('postcss-selector-parser');
 const file = new URL('../assets/colors.raw.css', import.meta.url);
 let css = fs.readFileSync(file, 'utf8');
 const slots = new Map([
-    ['#f6f5f3', '--nac-canvas'], ['#b13f32', '--nac-action'],
-    ['#8f3026', '--nac-action-hover-20'], ['#9f382d', '--nac-action-hover-10'],
-    ['#1e1e1e', '--nac-submenu'], ['#262626', '--nac-nav'],
-    ['#ff6f60', '--nac-accent'], ['#d5d5d5', '--nac-menu-text'],
-    ['#ff9b90', '--nac-accent-hover'],
-    ['hsl(0,0%,21.9019607843%)', '--nac-nav-lighter'],
-    ['rgb(90%,39.1764705882%,33.8823529412%)', '--nac-accent-muted'],
-    ['rgb(61.6144078777%,21.9305519565%,17.4051999654%)', '--nac-action-surface'],
-    ['rgb(79.9602660447%,34.2696726268%,29.0593417984%)', '--nac-action-bright'],
+    ['#f6f5f3', '--lfa-canvas'], ['#b13f32', '--lfa-action'],
+    ['#8f3026', '--lfa-action-hover-20'], ['#9f382d', '--lfa-action-hover-10'],
+    ['#1e1e1e', '--lfa-submenu'], ['#262626', '--lfa-nav'],
+    ['#ff6f60', '--lfa-accent'], ['#d5d5d5', '--lfa-menu-text'],
+    ['#ff9b90', '--lfa-accent-hover'],
+    ['hsl(0,0%,21.9019607843%)', '--lfa-nav-lighter'],
+    ['rgb(90%,39.1764705882%,33.8823529412%)', '--lfa-accent-muted'],
+    ['rgb(61.6144078777%,21.9305519565%,17.4051999654%)', '--lfa-action-surface'],
+    ['rgb(79.9602660447%,34.2696726268%,29.0593417984%)', '--lfa-action-bright'],
 ]);
 // Do not transform existing var() fallbacks: those are already symbolic.
 css = css.replace(/var\([^)]*\)|#[0-9a-f]{3,8}\b|(?:rgb|hsl)\([^)]*\)/gi, value => {
     const slot = slots.get(value);
     return slot ? `var(${slot},${value})` : value;
 });
-css = css.replaceAll('color:var(--nac-action,#b13f32)', 'color:var(--nac-link,#b13f32)');
+css = css.replaceAll('color:var(--lfa-action,#b13f32)', 'color:var(--lfa-link,#b13f32)');
 
 // WordPress normally loads only the selected scheme. Scope every rule as an
 // additional safeguard: a cached or duplicated stylesheet cannot repaint users
 // who chose another scheme. :is() preserves selectors whose ancestors are body
 // classes (for example .wp-core-ui), and pseudo-elements stay outside :is().
-const scope = 'body.admin-color-native-admin-colours';
+const scope = 'body.admin-color-leapfrog-admin';
 const sheet = postcss.parse(css);
 sheet.walkRules(rule => {
     if (rule.parent.type === 'atrule' && /keyframes$/i.test(rule.parent.name)) return;
@@ -42,7 +42,7 @@ sheet.walkRules(rule => {
             const lastCombinator = selector.nodes.reduce((index, node, i) => node.type === 'combinator' ? i : index, -1);
             const body = selector.nodes.slice(lastCombinator + 1).find(node => node.type === 'tag' && node.value === 'body');
             if (body) {
-                selector.insertAfter(body, selectorParser.className({ value: 'admin-color-native-admin-colours' }));
+                selector.insertAfter(body, selectorParser.className({ value: 'admin-color-leapfrog-admin' }));
                 return;
             }
             const inner = selector.clone();
@@ -65,5 +65,5 @@ sheet.walkRules(rule => {
     }).processSync(rule.selector, { lossless: false });
 });
 css = sheet.toString();
-fs.writeFileSync(new URL('../assets/colors.min.css', import.meta.url), '/*! Native Admin Colours. Based on WordPress 7.1.3, GPL-2.0-or-later. */\n' + css);
+fs.writeFileSync(new URL('../assets/colors.min.css', import.meta.url), '/*! Leapfrog Admin. Based on WordPress 7.1.3, GPL-2.0-or-later. */\n' + css);
 fs.unlinkSync(file);

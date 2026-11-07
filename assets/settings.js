@@ -1,9 +1,9 @@
 (function ($) {
     'use strict';
-    const preview = document.querySelector('.nac-colour-preview');
+    const preview = document.querySelector('.lfa-colour-preview');
     if (!preview) return;
-    const fields = document.querySelectorAll('[data-nac-key]');
-    const values = Object.fromEntries([...fields].map(field => [field.dataset.nacKey, field.value]));
+    const fields = document.querySelectorAll('[data-lfa-key]');
+    const values = Object.fromEntries([...fields].map(field => [field.dataset.lfaKey, field.value]));
     const defaults = { navigation: '#262626', accent: '#ff6f60', action: '#b13f32', canvas: '#f6f5f3', active_plugin: '#f0f6fc' };
     function hex(value) {
         if (/^#[a-f\d]{3}$/i.test(value)) return '#' + [...value.slice(1)].map(c => c + c).join('');
@@ -53,10 +53,10 @@
         if (contrast(c.menu_text, c.navigation) < 4.5 || contrast(c.toolbar_text, c.toolbar) < 4.5 || contrast(c.submenu_text, c.submenu) < 4.5) warnings.push('Some text has low contrast. Clear its colour to use Automatic.');
         if (contrast(c.toolbar_focus_text, c.toolbar_surface) < 4.5) warnings.push('Toolbar hover and focus text has low contrast. Clear its colour to use Automatic.');
         if (contrast(c.menu_selected_text, c.accent) < 4.5 || contrast(c.menu_focus_text, c.accent) < 4.5) warnings.push('Sidebar selected or focused text has low contrast. Clear its colour to use Automatic.');
-        document.querySelector('.nac-preview-warning').textContent = warnings.join(' ');
+        document.querySelector('.lfa-preview-warning').textContent = warnings.join(' ');
     }
     fields.forEach(field => {
-        const key = field.dataset.nacKey;
+        const key = field.dataset.lfaKey;
         if (field.type !== 'number') {
             $(field).wpColorPicker({
                 change: function (event, ui) { values[key] = ui.color.toString(); render(); },
@@ -68,7 +68,7 @@
             if (label && button) button.setAttribute('aria-label', 'Choose colour: ' + label.textContent);
             if (field.dataset.defaultColor === '') {
                 const auto = document.createElement('button');
-                auto.type = 'button'; auto.className = 'button nac-auto'; auto.textContent = 'Automatic';
+                auto.type = 'button'; auto.className = 'button lfa-auto'; auto.textContent = 'Automatic';
                 auto.setAttribute('aria-label', 'Automatic colour: ' + label.textContent);
                 auto.addEventListener('click', () => { field.value = ''; values[key] = ''; render(); $(field).trigger('change'); button.style.backgroundColor = ''; });
                 container.after(auto);
@@ -77,10 +77,10 @@
         ['input', 'change'].forEach(event => field.addEventListener(event, () => { values[key] = field.value; render(); }));
     });
     render();
-    const file = document.getElementById('nac-import-file');
-    const json = document.getElementById('nac-import-json');
-    const status = document.getElementById('nac-import-status');
-    const submit = document.getElementById('nac-import-button');
+    const file = document.getElementById('lfa-import-file');
+    const json = document.getElementById('lfa-import-json');
+    const status = document.getElementById('lfa-import-status');
+    const submit = document.getElementById('lfa-import-button');
     file.addEventListener('change', async () => {
         json.setCustomValidity('');
         if (!file.files.length) return;
@@ -89,7 +89,8 @@
             if (file.files[0].size > 65536) throw new Error('Choose a file smaller than 64 KB.');
             const text = await file.files[0].text();
             const data = JSON.parse(text);
-            if (data.plugin !== 'native-admin-colours' || data.format_version !== 1 || !data.settings) throw new Error('Choose a Native Admin Colours export file.');
+            // Native Admin Colours exports (the plugin's old name) are accepted too.
+            if (!['leapfrog-admin', 'native-admin-colours'].includes(data.plugin) || data.format_version !== 1 || (data.type || 'colours') !== 'colours' || !data.settings) throw new Error('Choose a Leapfrog Admin colours export file.');
             json.value = text;
             status.textContent = 'File ready. Click Import and Apply to replace the current settings.';
         } catch (error) {
@@ -98,7 +99,7 @@
         } finally { submit.disabled = false; }
     });
     json.addEventListener('input', () => { json.setCustomValidity(''); });
-    const chooseIcon = document.getElementById('nac-choose-toolbar-icon');
+    const chooseIcon = document.getElementById('lfa-choose-toolbar-icon');
     if (chooseIcon) {
         let frame;
         chooseIcon.addEventListener('click', () => {
@@ -107,15 +108,15 @@
                 frame.on('select', () => {
                     const selected = frame.state().get('selection').first().toJSON();
                     const url = selected.sizes?.thumbnail?.url || selected.url;
-                    document.getElementById('nac-toolbar-icon-id').value = selected.id;
-                    const sample = document.getElementById('nac-toolbar-icon-sample');
+                    document.getElementById('lfa-toolbar-icon-id').value = selected.id;
+                    const sample = document.getElementById('lfa-toolbar-icon-sample');
                     sample.src = url; sample.hidden = false;
-                    document.getElementById('nac-toolbar-icon-default').hidden = true;
-                    document.getElementById('nac-save-toolbar-icon').disabled = false;
-                    document.getElementById('nac-toolbar-icon-status').textContent = 'Image selected. Click Save Toolbar Icon to apply.';
+                    document.getElementById('lfa-toolbar-icon-default').hidden = true;
+                    document.getElementById('lfa-save-toolbar-icon').disabled = false;
+                    document.getElementById('lfa-toolbar-icon-status').textContent = 'Image selected. Click Save Toolbar Icon to apply.';
                 });
                 frame.on('open', () => {
-                    const id = Number(document.getElementById('nac-toolbar-icon-id').value);
+                    const id = Number(document.getElementById('lfa-toolbar-icon-id').value);
                     frame.state().get('selection').reset();
                     if (id) {
                         const attachment = wp.media.attachment(id);

@@ -1,0 +1,15 @@
+{
+	"name": "leapfrog-admin",
+	"version": "2.0.0",
+	"private": true,
+	"description": "Branded, native WordPress admin by Leapfrog Media.",
+	"license": "GPL-2.0-or-later",
+	"scripts": {
+		"build": "sass --style=compressed --no-source-map src/colors.scss assets/colors.raw.css && node src/build.mjs"
+	},
+	"devDependencies": {
+		"postcss": "^8.4.49",
+		"postcss-selector-parser": "^7.0.0",
+		"sass": "^1.83.0"
+	}
+}

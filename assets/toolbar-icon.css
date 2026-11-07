@@ -1,6 +1,6 @@
 /* Scoped to the site-name item, across colour schemes and desktop/mobile. */
-#wpadminbar #wp-admin-bar-site-name.nac-custom-toolbar-icon > .ab-item::before,
-#wpadminbar #wp-admin-bar-site-name.nac-custom-toolbar-icon > .ab-item .ab-icon,
-#wpadminbar #wp-admin-bar-site-name.nac-custom-toolbar-icon > .ab-item img:not(.nac-toolbar-icon){display:none!important;content:none!important;background:none!important}
-#wpadminbar #wp-admin-bar-site-name.nac-custom-toolbar-icon > .ab-item .nac-toolbar-icon{display:inline-block!important;width:20px!important;height:20px!important;max-width:20px;object-fit:contain;vertical-align:middle;margin:0 6px 0 0;padding:0;border:0;float:none}
-@media screen and (max-width:782px){#wpadminbar #wp-admin-bar-site-name.nac-custom-toolbar-icon > .ab-item .nac-toolbar-icon{position:absolute;top:9px;left:auto;right:auto;inset-inline-start:12px;width:28px!important;height:28px!important;min-width:28px;min-height:28px;max-width:28px;max-height:28px;margin:0}}
+#wpadminbar #wp-admin-bar-site-name.lfa-custom-toolbar-icon > .ab-item::before,
+#wpadminbar #wp-admin-bar-site-name.lfa-custom-toolbar-icon > .ab-item .ab-icon,
+#wpadminbar #wp-admin-bar-site-name.lfa-custom-toolbar-icon > .ab-item img:not(.lfa-toolbar-icon){display:none!important;content:none!important;background:none!important}
+#wpadminbar #wp-admin-bar-site-name.lfa-custom-toolbar-icon > .ab-item .lfa-toolbar-icon{display:inline-block!important;width:20px!important;height:20px!important;max-width:20px;object-fit:contain;vertical-align:middle;margin:0 6px 0 0;padding:0;border:0;float:none}
+@media screen and (max-width:782px){#wpadminbar #wp-admin-bar-site-name.lfa-custom-toolbar-icon > .ab-item .lfa-toolbar-icon{position:absolute;top:9px;left:auto;right:auto;inset-inline-start:12px;width:28px!important;height:28px!important;min-width:28px;min-height:28px;max-width:28px;max-height:28px;margin:0}}

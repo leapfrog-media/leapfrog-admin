@@ -1,5 +1,4 @@
 node_modules/
-package-lock.json
 assets/colors.raw.css
 .DS_Store
 Thumbs.db

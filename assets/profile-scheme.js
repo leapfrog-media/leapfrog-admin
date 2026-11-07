@@ -7,9 +7,9 @@
         // WordPress changes the stylesheet and saves the selection itself.
         // Update our scope immediately, including on older WordPress versions
         // that do not update the body's colour-scheme classes during previews.
-        $('#color-picker').on('click.nacScheme', '.color-option', function () {
+        $('#color-picker').on('click.lfaScheme', '.color-option', function () {
             const choice = this.querySelector('input[name="admin_color"]');
-            if (choice) document.body.classList.toggle('admin-color-native-admin-colours', choice.value === 'native-admin-colours');
+            if (choice) document.body.classList.toggle('admin-color-leapfrog-admin', choice.value === 'leapfrog-admin');
         });
     });
 })(jQuery);
