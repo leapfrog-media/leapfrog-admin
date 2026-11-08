@@ -66,6 +66,9 @@ function notices(): array
         'icon_saved' => 'Toolbar icon saved. Your site favicon is unchanged.',
         'icon_removed' => 'Default toolbar icon restored.',
         'features_saved' => 'Features saved.',
+        'updates_checked' => 'GitHub has been asked for updates.',
+        'token_saved' => 'GitHub token saved, and GitHub asked for updates.',
+        'token_removed' => 'GitHub token removed.',
         'role_added' => 'Role created. Choose what it is allowed to do, then save.',
         'role_saved' => 'Role saved.',
         'role_deleted' => 'Role deleted.',
@@ -87,6 +90,7 @@ function notices(): array
 function errors(): array
 {
     return [
+        'token_invalid' => 'That doesn’t look like a GitHub token (they are letters, numbers and underscores, like github_pat_…). Nothing was saved.',
         'role_name' => 'Give the role a name of up to 60 characters.',
         'role_missing' => 'That role no longer exists.',
         'role_protected' => 'This role can’t be deleted: it is built into WordPress, it is the role new users get, or you have it yourself.',
@@ -140,6 +144,7 @@ function tabs(): array
         }
     }
     $tabs['features'] = ['label' => 'Features', 'render' => __NAMESPACE__ . '\\render_features_tab'];
+    $tabs['updates'] = ['label' => 'Updates', 'render' => __NAMESPACE__ . '\\render_updates_tab'];
     return $tabs;
 }
 

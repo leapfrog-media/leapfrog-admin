@@ -3,7 +3,7 @@ Contributors: Leapfrog Media
 Requires at least: 6.3
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.5.0
+Stable tag: 2.6.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -124,6 +124,15 @@ The settings page uses WordPress's own colour picker and a small preview script.
 Other admin screens load one compiled stylesheet and inline variables, plus a tiny
 toolbar icon stylesheet when an icon is chosen. No external fonts or remote
 requests. Capabilities, login and authentication are not changed.
+
+== Updates ==
+Updates come from GitHub through WordPress's own updater (Dashboard > Updates,
+the Plugins screen, automatic updates). The newest version tag (v1.2.3) on
+github.com/leapfrog-media/leapfrog-admin is the newest version, so a release is just a
+tagged commit, pushed. Public repositories need nothing more. Private ones need
+a GitHub token that can read them: LEAPFROG_GITHUB_TOKEN in wp-config.php, or
+the Updates tab of Leapfrog Admin or Leapfrog Performance (one token covers all
+Leapfrog plugins). A copy that is a Git working folder is never updated.
 
 == Development ==
 Compiled CSS is included; no build tools are needed to run the plugin.

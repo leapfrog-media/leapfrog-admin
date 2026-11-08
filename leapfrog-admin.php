@@ -3,13 +3,14 @@
  * Plugin Name:       Leapfrog Admin
  * Plugin URI:        https://github.com/leapfrog-media/leapfrog-admin
  * Description:       The Leapfrog Media admin: colour scheme, toolbar icon, admin menu and admin bar editors, dashboard, notices, login page, list columns, page tree, profile pictures, code snippets and a user role editor, each switchable and many set per role. Leapfrog > Leapfrog Admin.
- * Version:           2.5.0
+ * Version:           2.6.0
  * Requires at least: 6.3
  * Requires PHP:      7.4
  * Author:            Leapfrog Media
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       leapfrog-admin
+ * Update URI:        https://github.com/leapfrog-media/leapfrog-admin
  */
 
 namespace Leapfrog\Admin;
@@ -18,7 +19,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-const VERSION = '2.5.0';
+const VERSION = '2.6.0';
 const FILE = __FILE__;
 
 /** Admin colour scheme id. Users who pick it get body.admin-color-leapfrog-admin. */
@@ -39,6 +40,8 @@ require_once __DIR__ . '/includes/menu.php';
 require_once __DIR__ . '/includes/page.php';
 require_once __DIR__ . '/includes/features.php';
 require_once __DIR__ . '/includes/migrate.php';
+require_once __DIR__ . '/includes/github-updater.php';
+require_once __DIR__ . '/includes/updates.php';
 
 // A feature that is switched off is not loaded at all.
 foreach (features() as $id => $feature) {

@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.6.0 — 2026-11-08
+
+Updates from GitHub, shared by all Leapfrog plugins.
+
+- Leapfrog Admin, Leapfrog Framework and Leapfrog Performance update through WordPress's own updater (Dashboard > Updates, the Plugins screen, automatic updates) from github.com/leapfrog-media. The newest version tag (`v1.2.3`) is the newest version; WordPress installs GitHub's zip of that tag into the plugin's own folder. "View details" shows the new version's changelog.
+- Public repositories need no setup. Private ones need a GitHub token that can read them, shared by all Leapfrog plugins: `LEAPFROG_GITHUB_TOKEN` in wp-config.php (best) or the new **Updates** tab (option `leapfrog_github_token`, not autoloaded). The token is only sent to api.github.com, for the plugin's own repository.
+- **Updates** tab: each Leapfrog plugin's installed and newest version, why a check failed (no token, refused token, no access, GitHub's hourly limit), Check Now, and the token.
+- A copy that is a Git working folder (like the development copies on kineticmoney.test) is never updated, so work can't be overwritten.
+- The plugin header's `Update URI` stops WordPress.org offering a different plugin with the same folder name.
+- The shared code is the `GitHubUpdater` class in `includes/github-updater.php`; Leapfrog Performance and Leapfrog Framework carry identical copies (only the namespace differs).
+- GitHub's zips leave out build sources and tooling (`.gitattributes` export-ignore).
+
 ## 2.5.0 — 2026-11-08
 
 Code snippets, for small site-specific code (snippets every site needs belong in a Leapfrog plugin).

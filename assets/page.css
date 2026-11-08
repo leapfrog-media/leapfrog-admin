@@ -11,7 +11,12 @@
 .lfa-narrow { max-width: 640px; }
 
 /* Features */
-.lfa-feature-table { max-width: 960px; }
+.lfa-feature-table, .lfa-updates-table { max-width: 960px; }
+
+/* Updates */
+.lfa-updates-table { margin-top: 12px; }
+.lfa-status-problem { color: #b32d2e; }
+.lfa-remove-token { margin-left: 12px !important; vertical-align: middle; }
 .lfa-feature-table td { vertical-align: middle; }
 .lfa-feature-table .lfa-feature-switch { width: 56px; text-align: center; }
 .lfa-settings input[type="checkbox"].lfa-toggle { appearance: none; -webkit-appearance: none; position: relative; width: 36px; height: 20px; margin: 0; border: 0; border-radius: 10px; background: #8c8f94; box-shadow: none; cursor: pointer; transition: background .15s; }
