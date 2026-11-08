@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.5.0 — 2026-11-08
+
+Code snippets, for small site-specific code (snippets every site needs belong in a Leapfrog plugin).
+
+- **Snippets** menu with WordPress's own list and edit screens: PHP, CSS, JavaScript and HTML snippets in WordPress's code editor (syntax colours, line numbers, Ctrl+S to save), with notes, an on/off switch in the list, and a running order.
+- Where each runs: everywhere, the site, the admin or the log-in page; CSS, JavaScript and HTML in the head, at the start of the body or in the footer. For: everyone, logged-in people, logged-out visitors or one role. Optionally only at certain addresses (/contact/, /blog/*). PHP snippets also run for AJAX and scheduled tasks.
+- Safety: PHP is syntax-checked on save and not switched on if it has a mistake; a snippet that errors or crashes while running is switched off and the error shown on its screen. Safe mode runs no snippets: `?lfa-safe-mode=1` for administrators, or `define( 'LEAPFROG_SNIPPETS_SAFE_MODE', true );` in wp-config.php.
+- Export (Bulk actions > Export) and Import (Snippets > Import); imported snippets start switched off.
+- Only administrators can see or change snippets. Snippets are stored as a private post type (`lfa_snippet`, code in post meta); the active ones are copied into the option `leapfrog_admin_snippets` so running them needs no database query.
+- A switchable feature on the Features tab (off = no snippets run).
+
 ## 2.4.0 — 2026-11-08
 
 Lists and pages: the last milestone of the Leapfrog Admin plan.

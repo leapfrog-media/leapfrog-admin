@@ -90,6 +90,14 @@ function features(): array
             'boot' => __NAMESPACE__ . '\\avatars_boot',
             'render' => __NAMESPACE__ . '\\render_avatars_tab',
         ],
+        'snippets' => [
+            'label' => 'Code snippets',
+            'description' => 'Small, site-specific PHP, CSS, JavaScript and HTML snippets, with WordPress’s own screens and code editor.',
+            'off' => 'No snippets run and the Snippets menu goes. Your snippets are kept.',
+            'files' => ['snippets.php'],
+            'boot' => __NAMESPACE__ . '\\snippets_boot',
+            'render' => __NAMESPACE__ . '\\render_snippets_tab',
+        ],
         'roles' => [
             'label' => 'User roles',
             'description' => 'Create, copy, rename and delete roles, and choose what each role is allowed to do.',

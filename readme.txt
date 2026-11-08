@@ -3,7 +3,7 @@ Contributors: Leapfrog Media
 Requires at least: 6.3
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.4.0
+Stable tag: 2.5.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,6 +52,14 @@ and Last modified columns, and add category and tag filters. Page tree: Pages >
 Tree view, where you drag pages into order and under each other. Profile
 pictures: everyone can choose a picture from the Media Library on their profile
 instead of using Gravatar.
+
+== Code snippets ==
+Snippets in the admin menu holds small, site-specific PHP, CSS, JavaScript and
+HTML snippets, edited in WordPress's own code editor. Choose where each runs,
+for whom, and optionally only at certain addresses. A PHP snippet with a mistake
+is not switched on, and one that errors while running is switched off. If a
+snippet breaks the site, add ?lfa-safe-mode=1 to an admin address (as an
+administrator), or define LEAPFROG_SNIPPETS_SAFE_MODE as true in wp-config.php.
 
 == User roles ==
 Leapfrog > Leapfrog Admin > User roles lists every role and how many people have
