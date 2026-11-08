@@ -1,20 +1,12 @@
 (function () {
     'use strict';
-    // Confirm before undoing or deleting a role.
-    document.querySelectorAll('[data-lfa-confirm]').forEach(button => {
-        button.addEventListener('click', event => {
-            if (!window.confirm(button.dataset.lfaConfirm)) event.preventDefault();
-        });
-    });
-
+    // Unsaved-change warnings and confirm buttons come from page.js.
     const form = document.getElementById('lfa-role-form');
     if (!form) return;
     const search = document.getElementById('lfa-cap-search');
     const onlyTicked = document.getElementById('lfa-cap-ticked');
     const count = document.getElementById('lfa-cap-count');
-    const unsaved = form.querySelector('.lfa-unsaved');
     const groups = [...form.querySelectorAll('.lfa-cap-group')];
-    let dirty = false;
 
     function update() {
         const words = search.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
@@ -24,8 +16,7 @@
             let shown = 0;
             boxes.forEach(box => {
                 const item = box.closest('.lfa-cap');
-                const text = item.dataset.lfaSearch;
-                const visible = words.every(word => text.includes(word)) && (!onlyTicked.checked || box.checked);
+                const visible = words.every(word => item.dataset.lfaSearch.includes(word)) && (!onlyTicked.checked || box.checked);
                 item.hidden = !visible;
                 if (visible) shown++;
             });
@@ -42,29 +33,15 @@
             button.addEventListener('click', () => {
                 const on = button.dataset.lfaTick === '1';
                 group.querySelectorAll('.lfa-cap:not([hidden]) input:not(:disabled)').forEach(box => { box.checked = on; });
-                markDirty();
+                window.lfaMarkDirty(form);
                 update();
             });
         });
     });
 
-    function markDirty() {
-        dirty = true;
-        unsaved.hidden = false;
-    }
-
-    form.addEventListener('change', event => {
-        if (event.target !== onlyTicked && event.target !== search) markDirty();
-        update();
-    });
-    form.addEventListener('input', event => {
-        if (event.target === search) update(); else if (event.target !== onlyTicked) markDirty();
-    });
+    form.addEventListener('change', update);
+    search.addEventListener('input', update);
     // Enter in the search box filters instead of saving the role.
     search.addEventListener('keydown', event => { if (event.key === 'Enter') event.preventDefault(); });
-    form.addEventListener('submit', () => { dirty = false; });
-    window.addEventListener('beforeunload', event => {
-        if (dirty) { event.preventDefault(); event.returnValue = ''; }
-    });
     update();
 })();

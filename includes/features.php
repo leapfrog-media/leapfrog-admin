@@ -26,6 +26,22 @@ function features(): array
             'boot' => __NAMESPACE__ . '\\toolbar_icon_boot',
             'render' => __NAMESPACE__ . '\\render_toolbar_icon_tab',
         ],
+        'admin-menu' => [
+            'label' => 'Admin menu',
+            'description' => 'Reorder, rename, hide and re-icon menu items, and add separators, for everyone, a role or one person.',
+            'off' => 'Everyone sees WordPress’s own menu again. Your changes are kept.',
+            'files' => ['layers.php', 'admin-menu.php'],
+            'boot' => __NAMESPACE__ . '\\admin_menu_boot',
+            'render' => __NAMESPACE__ . '\\render_admin_menu_tab',
+        ],
+        'admin-bar' => [
+            'label' => 'Admin bar',
+            'description' => 'Hide toolbar items, add your own links and a Bricks menu, for everyone, a role or one person.',
+            'off' => 'Everyone sees WordPress’s own toolbar again. Your changes are kept.',
+            'files' => ['layers.php', 'admin-bar.php'],
+            'boot' => __NAMESPACE__ . '\\admin_bar_boot',
+            'render' => __NAMESPACE__ . '\\render_admin_bar_tab',
+        ],
         'roles' => [
             'label' => 'User roles',
             'description' => 'Create, copy, rename and delete roles, and choose what each role is allowed to do.',
@@ -41,7 +57,6 @@ function features(): array
 function coming_features(): array
 {
     return [
-        '2.2' => 'Admin menu and admin bar editors, for everyone, per role and per user',
         '2.3' => 'Dashboard clean-up, notices, login page and brand colours',
         '2.4' => 'List columns and filters, page tree and profile pictures',
     ];

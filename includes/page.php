@@ -70,6 +70,10 @@ function notices(): array
         'role_saved' => 'Role saved.',
         'role_deleted' => 'Role deleted.',
         'role_restored' => 'Role restored to how it was before Leapfrog first changed it.',
+        'menu_saved' => 'Admin menu saved.',
+        'menu_reset' => 'Admin menu changes removed for this layer.',
+        'bar_saved' => 'Admin bar saved.',
+        'bar_reset' => 'Admin bar changes removed for this layer.',
     ];
 }
 
@@ -81,6 +85,9 @@ function errors(): array
         'role_protected' => 'This role can’t be deleted: it is built into WordPress, it is the role new users get, or you have it yourself.',
         'role_move' => 'Choose another role for the people who have this one.',
         'role_permission' => 'Permission names can use lower-case letters, numbers and underscores only.',
+        'menu_invalid' => 'The menu changes could not be read. Nothing was saved; please try again.',
+        'menu_self_lock' => 'Not saved: this would hide Leapfrog or Leapfrog Admin from you. Hide it for other roles or people instead.',
+        'bar_link' => 'Each link needs a name and a web address. Nothing was saved.',
     ];
 }
 
@@ -110,6 +117,7 @@ function page_assets(string $hook): void
         return;
     }
     wp_enqueue_style('lfa-page', asset_url('assets/page.css'), [], asset_version('assets/page.css'));
+    wp_enqueue_script('lfa-page', asset_url('assets/page.js'), [], asset_version('assets/page.js'), true);
 }
 add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\page_assets');
 

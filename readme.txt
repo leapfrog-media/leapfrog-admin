@@ -3,7 +3,7 @@ Contributors: Leapfrog Media
 Requires at least: 6.3
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.1.0
+Stable tag: 2.2.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,20 @@ All Leapfrog plugins share one Leapfrog link in the admin menu, with each plugin
 beneath it. Leapfrog Admin has a tab per feature (Colours, Toolbar icon, User
 roles). Switch features off on the Features tab: a feature that is off is not
 loaded and its tab is hidden; its settings are kept.
+
+== Admin menu and admin bar ==
+Both editors work in layers: Everyone, then a role, then one person, and the most
+specific wins. Choose the layer under "Changes for". Anything a role or person
+leaves "As above" follows the layer above it.
+
+Admin menu: drag items and sub-items into order, rename them, change icons, hide
+them and add separators. Hiding only removes the link; the page still opens from
+its address, so use the role editor to stop access. You can't save a change that
+hides Leapfrog or Leapfrog Admin from yourself.
+
+Admin bar: hide toolbar items (in the admin and on the site), add your own links,
+and show a Bricks menu. The list of items fills in as administrators browse the
+admin and the site, because many items only appear on certain pages.
 
 == User roles ==
 Leapfrog > Leapfrog Admin > User roles lists every role and how many people have

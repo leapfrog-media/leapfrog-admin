@@ -25,7 +25,7 @@ function roles_assets(string $hook): void
     if ($hook !== PAGE_HOOK || current_tab() !== 'roles' || empty($_GET['role'])) {
         return;
     }
-    wp_enqueue_script('lfa-roles', asset_url('assets/roles.js'), [], asset_version('assets/roles.js'), true);
+    wp_enqueue_script('lfa-roles', asset_url('assets/roles.js'), ['lfa-page'], asset_version('assets/roles.js'), true);
 }
 
 /* -------------------------------------------------------------------------
@@ -554,7 +554,7 @@ function render_role_editor(string $slug): void
     <h2 class="lfa-role-title"><?php echo esc_html($name); ?><?php echo role_badges($slug); // phpcs:ignore -- escaped in role_badges() ?></h2>
     <p><?php echo people_link($slug, $counts); // phpcs:ignore -- escaped in people_link() ?> with this role.</p>
 
-    <form action="<?php echo esc_url($post); ?>" method="post" id="lfa-role-form">
+    <form action="<?php echo esc_url($post); ?>" method="post" id="lfa-role-form" class="lfa-track">
         <input type="hidden" name="action" value="leapfrog_admin_role_save">
         <input type="hidden" name="role" value="<?php echo esc_attr($slug); ?>">
         <?php wp_nonce_field('leapfrog_admin_role_save', '_lfa_nonce', false); ?>
@@ -564,8 +564,8 @@ function render_role_editor(string $slug): void
 
         <div class="lfa-cap-toolbar">
             <label class="screen-reader-text" for="lfa-cap-search">Find a permission</label>
-            <input type="search" id="lfa-cap-search" placeholder="Find a permission" class="regular-text">
-            <label><input type="checkbox" id="lfa-cap-ticked"> Only show ticked</label>
+            <input type="search" id="lfa-cap-search" placeholder="Find a permission" class="regular-text" data-lfa-ignore>
+            <label data-lfa-ignore><input type="checkbox" id="lfa-cap-ticked"> Only show ticked</label>
             <span id="lfa-cap-count" class="lfa-cap-count" role="status"></span>
         </div>
 

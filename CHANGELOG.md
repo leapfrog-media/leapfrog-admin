@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.2.0 — 2026-11-08
+
+Admin menu and admin bar editors, each for everyone, a role or one person.
+
+- **Layers** (`includes/layers.php`): changes for Everyone, then a role, then one person; the most specific wins. Someone with two roles gets the changes from both, and if one role hides an item that the other shows, it is shown. "Changes for" switches layer; badges list the layers that have changes; Reset removes a layer's changes.
+- **Admin menu** tab: drag to reorder top-level items and sub-items, rename (counters such as comments waiting are kept), change icons (any Dashicon, with search), hide, and add separators. A layer can keep the order from above or have its own. Items added later by plugins slot in after the item they followed. Hiding only removes the link. Saving is refused if it would hide Leapfrog or Leapfrog Admin from the person saving. Option `leapfrog_admin_menu`.
+- **Admin bar** tab: hide any toolbar item seen in the admin or on the site (Leapfrog lists items as administrators browse, option `leapfrog_admin_bar_seen`), add your own links (admin, site or both, optionally in a new tab), and a Bricks menu (Edit this page with Bricks, Templates, Custom fonts, Settings, each only for people allowed to use it). Option `leapfrog_admin_bar`.
+- Both are features that can be switched off on the Features tab.
+- `assets/page.js`: shared unsaved-changes warning and confirm buttons (the role editor uses it too).
+
 ## 2.1.0 — 2026-11-08
 
 Foundations: the shared Leapfrog menu, tabs with feature switches, and a user role editor.
