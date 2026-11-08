@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.1 — 2026-11-08
+
+- The shared Leapfrog menu orders Leapfrog Framework's new Header Builder after Leapfrog Framework (the order list is the same in every Leapfrog plugin).
+
 ## 2.6.0 — 2026-11-08
 
 Updates from GitHub, shared by all Leapfrog plugins.
