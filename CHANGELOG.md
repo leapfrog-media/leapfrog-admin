@@ -4,7 +4,7 @@
 
 Updates from GitHub, shared by all Leapfrog plugins.
 
-- Leapfrog Admin, Leapfrog Framework and Leapfrog Performance update through WordPress's own updater (Dashboard > Updates, the Plugins screen, automatic updates) from github.com/leapfrog-media. The newest version tag (`v1.2.3`) is the newest version; WordPress installs GitHub's zip of that tag into the plugin's own folder. "View details" shows the new version's changelog.
+- Leapfrog Admin, Leapfrog Framework and Leapfrog Performance update through WordPress's own updater (Dashboard > Updates, the Plugins screen, automatic updates) from github.com/leapfrog-media. The Version in the plugin file on the main branch is the newest version, so a release is a pushed commit that raises it (no tags); WordPress installs GitHub's zip of that exact commit into the plugin's own folder. Only finished versions go to main. "View details" shows the new version's changelog.
 - Public repositories need no setup. Private ones need a GitHub token that can read them, shared by all Leapfrog plugins: `LEAPFROG_GITHUB_TOKEN` in wp-config.php (best) or the new **Updates** tab (option `leapfrog_github_token`, not autoloaded). The token is only sent to api.github.com, for the plugin's own repository.
 - **Updates** tab: each Leapfrog plugin's installed and newest version, why a check failed (no token, refused token, no access, GitHub's hourly limit), Check Now, and the token.
 - A copy that is a Git working folder (like the development copies on kineticmoney.test) is never updated, so work can't be overwritten.
