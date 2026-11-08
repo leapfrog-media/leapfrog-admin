@@ -3,6 +3,16 @@ namespace Leapfrog\Admin;
 
 if (!defined('ABSPATH')) { exit; }
 
+/** The Toolbar icon feature. */
+function toolbar_icon_boot(): void
+{
+    add_action('admin_post_leapfrog_admin_toolbar_icon', __NAMESPACE__ . '\\save_toolbar_icon');
+    add_action('wp_before_admin_bar_render', __NAMESPACE__ . '\\replace_toolbar_icon', PHP_INT_MAX);
+    add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\toolbar_icon_assets');
+    add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\toolbar_icon_assets');
+    add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\toolbar_icon_settings_assets');
+}
+
 /** Use an existing Media Library image; no favicon filters or remote lookups. */
 function toolbar_icon_url(int $id = 0): string
 {
@@ -17,16 +27,15 @@ function save_toolbar_icon(): void
     authorise('leapfrog_admin_toolbar_icon');
     if (isset($_POST['remove_toolbar_icon'])) {
         delete_option(OPTION_TOOLBAR_ICON);
-        return_to_page('icon_removed');
+        return_to_page('icon_removed', ['tab' => 'toolbar-icon']);
     }
     $value = $_POST['toolbar_icon_id'] ?? null;
     if (!is_string($value) || !preg_match('/^[1-9]\d{0,9}$/D', $value) || !toolbar_icon_url((int) $value)) {
         wp_die('Choose an image from this site’s Media Library. No settings were changed.', '', ['response' => 400]);
     }
     update_option(OPTION_TOOLBAR_ICON, (int) $value);
-    return_to_page('icon_saved');
+    return_to_page('icon_saved', ['tab' => 'toolbar-icon']);
 }
-add_action('admin_post_leapfrog_admin_toolbar_icon', __NAMESPACE__ . '\\save_toolbar_icon');
 
 /** Preserve the site's label, link, permissions and all child menu items. */
 function replace_toolbar_icon(): void
@@ -56,23 +65,28 @@ function replace_toolbar_icon(): void
     $node->meta['class'] = implode(' ', array_unique($classes));
     $wp_admin_bar->add_node((array) $node);
 }
-add_action('wp_before_admin_bar_render', __NAMESPACE__ . '\\replace_toolbar_icon', PHP_INT_MAX);
 
 function toolbar_icon_assets(): void
 {
     if (!is_admin_bar_showing() || !toolbar_icon_url()) { return; }
     wp_enqueue_style('lfa-toolbar-icon', asset_url('assets/toolbar-icon.css'), [], asset_version('assets/toolbar-icon.css'));
 }
-add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\toolbar_icon_assets');
-add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\toolbar_icon_assets');
 
-function render_toolbar_icon_settings(): void
+function toolbar_icon_settings_assets(string $hook): void
+{
+    if ($hook !== PAGE_HOOK || current_tab() !== 'toolbar-icon' || !current_user_can('upload_files')) {
+        return;
+    }
+    wp_enqueue_media();
+    wp_enqueue_script('lfa-toolbar-icon-settings', asset_url('assets/toolbar-icon-settings.js'), ['media-views'], asset_version('assets/toolbar-icon-settings.js'), true);
+}
+
+function render_toolbar_icon_tab(): void
 {
     $id = absint(get_option(OPTION_TOOLBAR_ICON, 0));
     $url = toolbar_icon_url($id);
     ?>
-    <details class="lfa-panel" id="lfa-toolbar-icon-panel">
-        <summary>Toolbar icon</summary>
+    <div class="lfa-panel lfa-narrow" id="lfa-toolbar-icon-panel">
         <p>Choose an image for the icon beside the site name in the WordPress toolbar. A light icon with a transparent background works well on a dark toolbar.</p>
         <p>This is shared by all users and appears in the toolbar in the dashboard and when viewing the site. Your browser favicon stays as it is.</p>
         <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" id="lfa-toolbar-icon-form">
@@ -88,6 +102,6 @@ function render_toolbar_icon_settings(): void
             <button type="submit" class="button" name="remove_toolbar_icon" value="1">Use Default Icon</button>
         </form>
         <p class="description">This image is kept separately from saved palettes and colour exports. Select it independently on each site.</p>
-    </details>
+    </div>
     <?php
 }

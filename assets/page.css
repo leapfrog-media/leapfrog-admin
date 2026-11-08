@@ -1,0 +1,66 @@
+/* Leapfrog > Admin: page frame, Features tab, toolbar icon tab and role editor. */
+.lfa-settings { max-width: 1360px; }
+.lfa-version { font-size: 13px; font-weight: 400; color: #646970; margin-left: 6px; vertical-align: middle; }
+.lfa-tabs { margin-bottom: 16px; }
+.lfa-settings .notice { margin: 12px 0; }
+.lfa-panel { border: 1px solid #c3c4c7; background: #fff; padding: 16px; margin: 0 0 12px; border-radius: 4px; }
+.lfa-panel summary { cursor: pointer; font-weight: 600; font-size: 15px; }
+.lfa-panel[open] summary { margin-bottom: 20px; }
+.lfa-panel > h2:first-child { margin-top: 0; }
+.lfa-panel .button { margin-bottom: 4px; }
+.lfa-narrow { max-width: 640px; }
+
+/* Features */
+.lfa-feature-table { max-width: 960px; }
+.lfa-feature-table td { vertical-align: middle; }
+.lfa-feature-table .lfa-feature-switch { width: 56px; text-align: center; }
+.lfa-settings input[type="checkbox"].lfa-toggle { appearance: none; -webkit-appearance: none; position: relative; width: 36px; height: 20px; margin: 0; border: 0; border-radius: 10px; background: #8c8f94; box-shadow: none; cursor: pointer; transition: background .15s; }
+.lfa-settings input[type="checkbox"].lfa-toggle::before { content: ""; position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; margin: 0; border-radius: 50%; background: #fff; transition: transform .15s; }
+.lfa-settings input[type="checkbox"].lfa-toggle:checked { background: var(--wp-admin-theme-color, #2271b1); }
+.lfa-settings input[type="checkbox"].lfa-toggle:checked::before { content: ""; transform: translateX(16px); }
+.lfa-settings input[type="checkbox"].lfa-toggle:focus-visible { outline: 2px solid var(--wp-admin-theme-color, #2271b1); outline-offset: 2px; }
+.lfa-coming { list-style: disc; margin-left: 20px; }
+
+/* Toolbar icon */
+.lfa-toolbar-icon-sample { display: flex; align-items: center; justify-content: center; min-height: 76px; background: var(--lfa-toolbar, var(--lfa-nav, #262626)); color: #fff; border-radius: 4px; padding: 12px; }
+.lfa-toolbar-icon-sample img { object-fit: contain; width: 40px; height: 40px; }
+.lfa-toolbar-icon-sample [hidden] { display: none; }
+
+/* Role list */
+.lfa-roles-table { max-width: 960px; margin-bottom: 24px; }
+.lfa-roles-table td { vertical-align: middle; }
+.lfa-roles-table code { font-size: 12px; }
+.lfa-role-actions { white-space: nowrap; text-align: right; }
+.lfa-role-actions form { display: inline; }
+.lfa-badge { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 10px; background: #f0f0f1; color: #3c434a; font-size: 11px; font-weight: 400; vertical-align: middle; }
+
+/* Role editor */
+.lfa-role-title { font-size: 1.5em; margin-bottom: 4px; }
+.lfa-cap-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin: 20px 0 16px; }
+.lfa-cap-count { color: #646970; }
+.lfa-cap-groups { columns: 2 440px; column-gap: 16px; }
+.lfa-cap-group { break-inside: avoid; border: 1px solid #c3c4c7; background: #fff; border-radius: 4px; padding: 4px 16px 12px; margin: 0 0 16px; }
+.lfa-cap-group[hidden] { display: none; }
+.lfa-cap-group legend { padding: 0 6px; margin-left: -6px; font-weight: 600; font-size: 14px; }
+.lfa-cap-group-count { font-weight: 400; color: #646970; margin-left: 4px; }
+.lfa-cap-group-actions { margin: 4px 0 8px; }
+.lfa-cap-list { margin: 0; }
+.lfa-cap { display: flex; gap: 8px; align-items: flex-start; margin: 0; padding: 6px 0; border-top: 1px solid #f0f0f1; }
+.lfa-cap:first-child { border-top: 0; }
+.lfa-cap[hidden] { display: none; }
+.lfa-cap input { margin-top: 2px; flex-shrink: 0; }
+.lfa-cap label { line-height: 1.5; }
+.lfa-cap code { font-size: 11px; padding: 1px 4px; margin-left: 2px; color: #50575e; background: #f6f7f7; }
+.lfa-tag { display: inline-block; margin-left: 4px; padding: 0 6px; border-radius: 3px; background: #f0f0f1; color: #3c434a; font-size: 11px; line-height: 18px; cursor: help; }
+.lfa-tag-powerful { background: #fcf0e3; color: #8a4b00; }
+.lfa-save-bar { position: sticky; bottom: 0; z-index: 5; display: flex; align-items: center; gap: 12px; margin: 8px 0 24px; padding: 12px 0; background: #f0f0f1; border-top: 1px solid #dcdcde; }
+.lfa-unsaved { color: #8a4b00; font-weight: 600; }
+.lfa-unsaved[hidden] { display: none; }
+
+@media (max-width: 782px) {
+    .lfa-cap-groups { columns: 1; }
+    .lfa-role-actions { text-align: left; }
+    .lfa-settings input[type="checkbox"].lfa-toggle { width: 44px; height: 24px; border-radius: 12px; }
+    .lfa-settings input[type="checkbox"].lfa-toggle::before { width: 18px; height: 18px; }
+    .lfa-settings input[type="checkbox"].lfa-toggle:checked::before { transform: translateX(20px); }
+}

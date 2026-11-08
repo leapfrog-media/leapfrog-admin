@@ -65,43 +65,6 @@ function saved_presets(): array
     return is_array($saved) ? array_slice($saved, 0, 20, true) : [];
 }
 
-function authorise(string $action): void
-{
-    if (!current_user_can('manage_options')) {
-        wp_die('You do not have permission to change these settings.', '', ['response' => 403]);
-    }
-    check_admin_referer($action, '_lfa_nonce');
-}
-
-function return_to_page(string $notice): void
-{
-    wp_safe_redirect(page_url(['lfa_notice' => $notice]));
-    exit;
-}
-
-function settings_menu(): void
-{
-    add_options_page('Leapfrog Admin', 'Leapfrog Admin', 'manage_options', PAGE, __NAMESPACE__ . '\\render_settings_page');
-}
-add_action('admin_menu', __NAMESPACE__ . '\\settings_menu');
-
-/** Old bookmarks (Appearance > Native Admin Colours) open the new screen. */
-function redirect_old_settings_pages(): void
-{
-    $page = isset($_GET['page']) && is_string($_GET['page']) ? $_GET['page'] : '';
-    if (!in_array($page, ['native-admin-colours', 'praxis-living-colours'], true) || !current_user_can('manage_options')) {
-        return;
-    }
-    // Leave the old plugin's own screen alone while it is still active.
-    if ($page === 'native-admin-colours' && function_exists('NativeAdminColours\\register_scheme')) {
-        return;
-    }
-    wp_safe_redirect(page_url());
-    exit;
-}
-// menu.php checks access before admin_init, so redirect before that check.
-add_action('admin_menu', __NAMESPACE__ . '\\redirect_old_settings_pages', 100);
-
 function register_settings(): void
 {
     register_setting('leapfrog_admin_colours_settings', OPTION_COLOURS, [
@@ -110,7 +73,6 @@ function register_settings(): void
         'sanitize_callback' => __NAMESPACE__ . '\\sanitize_colours',
     ]);
 }
-add_action('admin_init', __NAMESPACE__ . '\\register_settings');
 
 function sanitize_colours($input): array
 {
@@ -131,26 +93,20 @@ function sanitize_colours($input): array
 
 function settings_assets(string $hook): void
 {
-    if ($hook !== PAGE_HOOK) {
+    if ($hook !== PAGE_HOOK || current_tab() !== 'colours') {
         return;
     }
     wp_enqueue_style('wp-color-picker');
-    if (current_user_can('upload_files')) {
-        wp_enqueue_media();
-    }
     wp_enqueue_style('lfa-settings', asset_url('assets/settings.css'), [], asset_version('assets/settings.css'));
-    $dependencies = current_user_can('upload_files') ? ['wp-color-picker', 'media-views'] : ['wp-color-picker'];
-    wp_enqueue_script('lfa-settings', asset_url('assets/settings.js'), $dependencies, asset_version('assets/settings.js'), true);
+    wp_enqueue_script('lfa-settings', asset_url('assets/settings.js'), ['wp-color-picker'], asset_version('assets/settings.js'), true);
 }
-add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\settings_assets');
 
 function reset_colours(): void
 {
     authorise('leapfrog_admin_reset');
     update_option(OPTION_COLOURS, defaults());
-    return_to_page('reset');
+    return_to_page('reset', ['tab' => 'colours']);
 }
-add_action('admin_post_leapfrog_admin_reset', __NAMESPACE__ . '\\reset_colours');
 
 function save_preset(): void
 {
@@ -165,9 +121,8 @@ function save_preset(): void
     $presets[$id] = ['name' => $name, 'settings' => $palette];
     update_option(OPTION_PRESETS, $presets, false);
     update_option(OPTION_COLOURS, $palette);
-    return_to_page('preset_saved');
+    return_to_page('preset_saved', ['tab' => 'colours']);
 }
-add_action('admin_post_leapfrog_admin_save_preset', __NAMESPACE__ . '\\save_preset');
 
 function manage_preset(): void
 {
@@ -178,14 +133,13 @@ function manage_preset(): void
     if (isset($_POST['preset_operation']) && $_POST['preset_operation'] === 'delete') {
         unset($presets[$id]);
         update_option(OPTION_PRESETS, $presets, false);
-        return_to_page('preset_deleted');
+        return_to_page('preset_deleted', ['tab' => 'colours']);
     }
     $palette = validate_palette($presets[$id]['settings'] ?? null);
     if (is_wp_error($palette)) { wp_die('This palette contains invalid settings.', '', ['response' => 400]); }
     update_option(OPTION_COLOURS, $palette);
-    return_to_page('preset_loaded');
+    return_to_page('preset_loaded', ['tab' => 'colours']);
 }
-add_action('admin_post_leapfrog_admin_manage_preset', __NAMESPACE__ . '\\manage_preset');
 
 function export_settings(): void
 {
@@ -197,7 +151,6 @@ function export_settings(): void
     echo wp_json_encode(['plugin' => EXPORT_ID, 'type' => 'colours', 'format_version' => 1, 'settings' => colours()], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     exit;
 }
-add_action('admin_post_leapfrog_admin_export', __NAMESPACE__ . '\\export_settings');
 
 function parse_import($json)
 {
@@ -215,27 +168,18 @@ function import_settings(): void
     $palette = parse_import(isset($_POST['settings_json']) ? wp_unslash($_POST['settings_json']) : null);
     if (is_wp_error($palette)) { wp_die(esc_html($palette->get_error_message()) . ' No settings were changed.', '', ['response' => 400]); }
     update_option(OPTION_COLOURS, $palette);
-    return_to_page('imported');
+    return_to_page('imported', ['tab' => 'colours']);
 }
-add_action('admin_post_leapfrog_admin_import', __NAMESPACE__ . '\\import_settings');
 
-function render_settings_page(): void
+function render_colours_tab(): void
 {
-    if (!current_user_can('manage_options')) { return; }
     $values = colours();
     $presets = saved_presets();
     $post = admin_url('admin-post.php');
-    $notices = ['preset_saved' => 'Palette saved and applied.', 'preset_loaded' => 'Saved palette applied.', 'preset_deleted' => 'Saved palette deleted. Current colours are unchanged.', 'imported' => 'Settings imported and applied.', 'reset' => 'Colours and sizing reset to the defaults. Saved palettes are kept.', 'icon_saved' => 'Toolbar icon saved. Your site favicon is unchanged.', 'icon_removed' => 'Default toolbar icon restored.'];
-    $notice = isset($_GET['lfa_notice']) && is_string($_GET['lfa_notice']) ? sanitize_key(wp_unslash($_GET['lfa_notice'])) : '';
     $usingScheme = get_user_option('admin_color') === SCHEME;
-    // Settings pages print settings_errors() themselves (wp-admin/options-head.php).
     ?>
-    <div class="wrap lfa-settings">
-        <h1>Leapfrog Admin</h1>
-        <h2 class="lfa-section-title">Admin colours</h2>
         <p>Personalise your WordPress workspace. These settings apply to everyone who chooses the <strong>Leapfrog</strong> colour scheme in their profile.</p>
         <?php if (!$usingScheme) : ?><div class="notice notice-info inline"><p>You are not using the Leapfrog scheme yet. Choose it under <a href="<?php echo esc_url(admin_url('profile.php')); ?>">Profile &gt; Admin Colour Scheme</a> to see these colours across the dashboard.</p></div><?php endif; ?>
-        <?php if (isset($notices[$notice])) : ?><div class="notice notice-success is-dismissible"><p><?php echo esc_html($notices[$notice]); ?></p></div><?php endif; ?>
         <div class="lfa-colour-layout">
             <div class="lfa-colour-controls">
                 <form action="options.php" method="post" id="lfa-settings-form">
@@ -268,7 +212,6 @@ function render_settings_page(): void
                         <button type="submit" class="button" name="action" value="leapfrog_admin_save_preset" formaction="<?php echo esc_url($post); ?>">Save and Apply Palette</button>
                     </details>
                 </form>
-                <?php render_toolbar_icon_settings(); ?>
                 <details class="lfa-panel">
                     <summary>Saved palettes</summary>
                     <?php if (!$presets) : ?><p>No palettes saved yet. Use “Save a named palette” above.</p><?php else : ?>
@@ -316,6 +259,5 @@ function render_settings_page(): void
                 <p class="lfa-preview-warning" role="status"></p>
             </div>
         </div>
-    </div>
     <?php
 }

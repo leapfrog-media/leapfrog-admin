@@ -3,19 +3,37 @@ Contributors: Leapfrog Media
 Requires at least: 6.3
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.0.0
+Stable tag: 2.1.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-A branded, native WordPress admin: an editable admin colour scheme, saved
-palettes and a custom toolbar icon. Formerly Native Admin Colours.
+The Leapfrog Media admin: an editable admin colour scheme with saved palettes,
+a custom toolbar icon and a user role editor. Formerly Native Admin Colours.
 
 == Installation ==
 1. Install and activate the plugin.
-2. Open Users > Profile > Admin Colour Scheme.
-3. Select Leapfrog and click Update Profile.
-4. Open Settings > Leapfrog Admin to customise the shared settings.
+2. Open Leapfrog > Leapfrog Admin.
+3. For the colours: open Users > Profile > Admin Colour Scheme, select Leapfrog
+   and click Update Profile.
 
+== Leapfrog menu and features ==
+All Leapfrog plugins share one Leapfrog link in the admin menu, with each plugin
+beneath it. Leapfrog Admin has a tab per feature (Colours, Toolbar icon, User
+roles). Switch features off on the Features tab: a feature that is off is not
+loaded and its tab is hidden; its settings are kept.
+
+== User roles ==
+Leapfrog > Leapfrog Admin > User roles lists every role and how many people have
+it. Add a role from scratch or from another role's permissions, copy, rename and
+delete roles, and tick what each role may do. Permissions are grouped and
+described in plain words; powerful ones are marked. "Undo all changes" puts a
+role back to how it was before Leapfrog first changed it. Deleting a role moves
+its people to a role you choose. Built-in roles, the role new users get and your
+own roles can't be deleted, and Administrator and your own roles always keep
+"read" and "manage_options" so nobody is locked out. WordPress stores roles
+itself, so they stay as they are if this plugin is switched off or removed.
+
+== Colours ==
 Each user chooses their own scheme. Only administrators with manage_options can
 change the site's shared settings. Saved settings apply to everyone who selected
 the Leapfrog scheme. All colour and layout rules are scoped to the current viewer
@@ -49,7 +67,7 @@ dimensions. Third-party screens may keep their own styles. Frontend pages and th
 Bricks builder are unchanged.
 
 == Toolbar icon ==
-Settings > Leapfrog Admin > Toolbar icon. Choose Image opens the Media Library;
+Leapfrog > Leapfrog Admin > Toolbar icon. Choose Image opens the Media Library;
 Save Toolbar Icon applies it to the site-name item in the toolbar for every user
 and colour scheme, in the dashboard and on the site. Use Default Icon restores
 the original. The site favicon is unchanged. The image is stored separately from

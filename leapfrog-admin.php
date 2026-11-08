@@ -2,8 +2,8 @@
 /**
  * Plugin Name:       Leapfrog Admin
  * Plugin URI:        https://github.com/leapfrog-media/leapfrog-admin
- * Description:       Branded, native WordPress admin: an editable admin colour scheme, saved palettes and a custom toolbar icon. Settings > Leapfrog Admin.
- * Version:           2.0.0
+ * Description:       The Leapfrog Media admin: an editable admin colour scheme, a custom toolbar icon and a user role editor, each switchable. Leapfrog > Admin.
+ * Version:           2.1.0
  * Requires at least: 6.3
  * Requires PHP:      7.4
  * Author:            Leapfrog Media
@@ -18,31 +18,43 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-const VERSION = '2.0.0';
+const VERSION = '2.1.0';
 const FILE = __FILE__;
 
 /** Admin colour scheme id. Users who pick it get body.admin-color-leapfrog-admin. */
 const SCHEME = 'leapfrog-admin';
 
-/** Settings screen: Settings > Leapfrog Admin. */
+/** Settings screen: Leapfrog > Admin (admin.php?page=leapfrog-admin). */
 const PAGE = 'leapfrog-admin';
-const PAGE_HOOK = 'settings_page_leapfrog-admin';
+const PAGE_HOOK = 'leapfrog_page_leapfrog-admin';
 
 const OPTION_COLOURS = 'leapfrog_admin_colours';
 const OPTION_PRESETS = 'leapfrog_admin_presets';
 const OPTION_TOOLBAR_ICON = 'leapfrog_admin_toolbar_icon';
 const OPTION_VERSION = 'leapfrog_admin_version';
+const OPTION_DISABLED = 'leapfrog_admin_disabled_features';
+const OPTION_ROLE_BACKUPS = 'leapfrog_admin_role_backups';
 
-require_once __DIR__ . '/includes/colours.php';
-require_once __DIR__ . '/includes/settings.php';
-require_once __DIR__ . '/includes/toolbar-icon.php';
+require_once __DIR__ . '/includes/menu.php';
+require_once __DIR__ . '/includes/page.php';
+require_once __DIR__ . '/includes/features.php';
 require_once __DIR__ . '/includes/migrate.php';
+
+// A feature that is switched off is not loaded at all.
+foreach (features() as $id => $feature) {
+    if (feature_enabled($id)) {
+        foreach ($feature['files'] as $file) {
+            require_once __DIR__ . '/includes/' . $file;
+        }
+        ($feature['boot'])();
+    }
+}
 
 register_activation_hook(__FILE__, __NAMESPACE__ . '\\migrate');
 
 function page_url(array $args = []): string
 {
-    return add_query_arg($args, admin_url('options-general.php?page=' . PAGE));
+    return add_query_arg($args, admin_url('admin.php?page=' . PAGE));
 }
 
 function asset_url(string $path): string

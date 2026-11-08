@@ -3,6 +3,21 @@ namespace Leapfrog\Admin;
 
 if (!defined('ABSPATH')) { exit; }
 
+/** The Colours feature: hooks for the scheme (this file) and its tab (colours-settings.php). */
+function colours_boot(): void
+{
+    add_action('admin_init', __NAMESPACE__ . '\\register_scheme', 20);
+    add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\colour_variables', 100);
+    add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\profile_scheme_assets');
+    add_action('admin_init', __NAMESPACE__ . '\\register_settings');
+    add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\settings_assets');
+    add_action('admin_post_leapfrog_admin_reset', __NAMESPACE__ . '\\reset_colours');
+    add_action('admin_post_leapfrog_admin_save_preset', __NAMESPACE__ . '\\save_preset');
+    add_action('admin_post_leapfrog_admin_manage_preset', __NAMESPACE__ . '\\manage_preset');
+    add_action('admin_post_leapfrog_admin_export', __NAMESPACE__ . '\\export_settings');
+    add_action('admin_post_leapfrog_admin_import', __NAMESPACE__ . '\\import_settings');
+}
+
 /** Register a native, per-user scheme; no permissions or preferences are forced. */
 function register_scheme(): void
 {
@@ -15,7 +30,6 @@ function register_scheme(): void
         ['base' => $colours['menu_text'] ?: ink($colours['navigation']), 'focus' => $colours['menu_focus_text'] ?: ink($colours['accent']), 'current' => $colours['menu_selected_text'] ?: ink($colours['accent'])]
     );
 }
-add_action('admin_init', __NAMESPACE__ . '\\register_scheme', 20);
 
 function defaults(): array
 {
@@ -148,7 +162,6 @@ function colour_variables(): void
     }
     wp_add_inline_style('colors', $css . '}');
 }
-add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\colour_variables', 100);
 
 /** Keep scheme scoping in sync with WordPress's live self-profile preview. */
 function profile_scheme_assets(string $hook): void
@@ -156,4 +169,3 @@ function profile_scheme_assets(string $hook): void
     if ($hook !== 'profile.php') { return; }
     wp_enqueue_script('lfa-profile-scheme', asset_url('assets/profile-scheme.js'), ['user-profile'], asset_version('assets/profile-scheme.js'), true);
 }
-add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\profile_scheme_assets');

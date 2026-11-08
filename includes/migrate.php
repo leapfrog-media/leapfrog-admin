@@ -14,6 +14,10 @@ const OLD_SCHEMES = ['native-admin-colours', 'praxis-living'];
  */
 function migrate(): void
 {
+    // Colour helpers, even while the Colours feature is switched off (this adds no hooks).
+    require_once __DIR__ . '/colours.php';
+    require_once __DIR__ . '/colours-settings.php';
+
     if (get_option(OPTION_COLOURS, false) === false) {
         $old = get_option('native_admin_colours', false);
         if (is_array($old)) {

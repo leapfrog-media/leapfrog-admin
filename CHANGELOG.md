@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.1.0 — 2026-11-08
+
+Foundations: the shared Leapfrog menu, tabs with feature switches, and a user role editor.
+
+- **Leapfrog menu.** One top-level Leapfrog link (the outline Leapfrog mark) shared by all Leapfrog plugins, with Leapfrog Admin, Leapfrog Framework and (later) Leapfrog Performance beneath. Clicking it opens Leapfrog Admin with the sub-items expanded. Whichever Leapfrog plugin loads first adds the link (`includes/menu.php`; Leapfrog Framework 1.2.2 carries the same logic).
+- The settings screen moved from Settings > Leapfrog Admin to **Leapfrog > Leapfrog Admin** (`admin.php?page=leapfrog-admin`). Old links redirect, including the Native Admin Colours ones.
+- **Tabs and feature switches.** Colours, Toolbar icon and User roles are each a tab and a feature that can be switched off on the Features tab (option `leapfrog_admin_disabled_features`). A feature that is off is not loaded. The toolbar icon has its own tab now.
+- **User roles.** A list of roles with how many people have each; add a role (from scratch or from another role's permissions), copy, rename and delete roles. Each permission is ticked in groups (Posts, Pages, other content types, Media, Appearance, Plugins, Users, Site and settings, Bricks, other plugins), described in plain words, with powerful ones marked; search and "only show ticked" filters; add a custom permission. "Undo all changes" puts a role back to how it was before Leapfrog first changed it (option `leapfrog_admin_role_backups`). Deleting a role moves its people to a role you choose. Built-in roles, the new-user role and your own roles can't be deleted; Administrator and your own roles keep `read` and `manage_options`.
+- Code: `includes/settings.php` is now `includes/colours-settings.php`; new `menu.php`, `page.php`, `features.php`, `roles.php`; `assets/page.css`, `roles.js`, `toolbar-icon-settings.js`.
+
 ## 2.0.0 — 2026-11-07
 
 Native Admin Colours is now **Leapfrog Admin**, the Leapfrog Media admin plugin. Colours, palettes and the toolbar icon work as before.
