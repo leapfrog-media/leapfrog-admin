@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.3.0 — 2026-11-08
+
+Dashboard, notices, login page and brand colours. Dashboard and Notices are set for everyone or a role.
+
+- **Dashboard** tab: hide any dashboard widget Leapfrog has seen (option `leapfrog_admin_dashboard_seen`) and the welcome panel; add a help box at the top of the dashboard with your own title and text (a role can have its own). Option `leapfrog_admin_dashboard`.
+- **Notices** tab: "Gather notices" moves admin notices into a panel behind a Notices button on the right of the toolbar, with a count that turns red when one is an error. Messages straight after an action (Post updated, Settings saved, form errors), inline messages and ones inside forms stay on the page. "Hide the Help tab" removes the Help tab. Option `leapfrog_admin_notices`.
+- **Login page** tab: logo (with width), background colour and image, and button colour on wp-login.php; blank colours follow the Leapfrog admin colours. The logo links to the site. Where people land after logging in and after logging out, for everyone and per role (a page on this site or a full address on it; someone sent to log in on the way to a page still goes there). Option `leapfrog_admin_login`.
+- **Use Brand Colours** on the Colours tab, when Leapfrog Framework has brand colours: fills in primary for the sidebar, accent for the selected menu and badges, secondary for buttons, for you to check in the preview and save.
+- The layer picker can leave out people (Dashboard and Notices). Leaving a page while a form is saving no longer asks about unsaved changes.
+
 ## 2.2.0 — 2026-11-08
 
 Admin menu and admin bar editors, each for everyone, a role or one person.

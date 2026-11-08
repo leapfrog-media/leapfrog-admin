@@ -74,6 +74,11 @@ function notices(): array
         'menu_reset' => 'Admin menu changes removed for this layer.',
         'bar_saved' => 'Admin bar saved.',
         'bar_reset' => 'Admin bar changes removed for this layer.',
+        'dashboard_saved' => 'Dashboard saved.',
+        'dashboard_reset' => 'Dashboard changes removed for this layer.',
+        'notices_saved' => 'Notices saved.',
+        'notices_reset' => 'Notices changes removed for this layer.',
+        'login_saved' => 'Login page saved.',
     ];
 }
 
@@ -88,6 +93,7 @@ function errors(): array
         'menu_invalid' => 'The menu changes could not be read. Nothing was saved; please try again.',
         'menu_self_lock' => 'Not saved: this would hide Leapfrog or Leapfrog Admin from you. Hide it for other roles or people instead.',
         'bar_link' => 'Each link needs a name and a web address. Nothing was saved.',
+        'login_redirect' => 'A log-in or log-out address isn’t valid: start it with / or give a full web address. Nothing was saved.',
     ];
 }
 
@@ -140,10 +146,10 @@ function render_page(): void
         // Pages outside the Settings menu print the Settings API messages themselves.
         settings_errors();
         if (isset(notices()[$notice])) {
-            echo '<div class="notice notice-success is-dismissible"><p>' . esc_html(notices()[$notice]) . '</p></div>';
+            echo '<div class="notice notice-success is-dismissible lfa-notice-keep"><p>' . esc_html(notices()[$notice]) . '</p></div>';
         }
         if (isset(errors()[$error])) {
-            echo '<div class="notice notice-error is-dismissible"><p>' . esc_html(errors()[$error]) . '</p></div>';
+            echo '<div class="notice notice-error is-dismissible lfa-notice-keep"><p>' . esc_html(errors()[$error]) . '</p></div>';
         }
         ($tabs[$current]['render'])();
         ?>

@@ -1,0 +1,20 @@
+/* Leapfrog Admin: notices gathered behind the toolbar's Notices button. */
+
+/* Hide notices until notices.js has sorted them, so they don't flash. */
+body.lfa-collect-notices #wpbody-content :is(div.notice, div.error, div.updated):not(.inline):not(.below-h2):not(.hidden):not(#message):not(.settings-error):not(.lfa-notice-keep) {
+    display: none;
+}
+#lfa-notices-panel :is(div.notice, div.error, div.updated) {
+    display: block !important;
+    margin: 0 0 8px;
+}
+
+#wpadminbar #wp-admin-bar-lfa-notices.lfa-notices-empty { display: none; }
+#wpadminbar #wp-admin-bar-lfa-notices .ab-icon::before { top: 2px; }
+#wpadminbar .lfa-notices-count { display: inline-block; min-width: 18px; padding: 0 5px; margin-left: 2px; border-radius: 9px; background: #646970; color: #fff; font-size: 11px; line-height: 18px; text-align: center; }
+#wpadminbar .lfa-notices-has-error .lfa-notices-count { background: #d63638; }
+
+#lfa-notices-panel { position: fixed; z-index: 99999; top: var(--wp-admin--admin-bar--height, 32px); right: 16px; width: 560px; max-width: calc(100vw - 32px); max-height: calc(100vh - 80px); overflow-y: auto; padding: 12px 16px 8px; background: #f0f0f1; border: 1px solid #c3c4c7; border-top: 0; border-radius: 0 0 6px 6px; box-shadow: 0 8px 24px rgba(0, 0, 0, .2); box-sizing: border-box; }
+#lfa-notices-panel[hidden] { display: none; }
+.lfa-notices-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.lfa-notices-head h2 { margin: 0; font-size: 14px; }

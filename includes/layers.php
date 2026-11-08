@@ -26,14 +26,17 @@ function layers_get(string $option): array
 }
 
 /** The layer named in the address: everyone, role:slug or user:id. */
-function current_layer(): array
+function current_layer(bool $allowUsers = true): array
 {
     $raw = isset($_GET['layer']) && is_string($_GET['layer']) ? sanitize_text_field(wp_unslash($_GET['layer'])) : '';
-    return parse_layer($raw);
+    return parse_layer($raw, $allowUsers);
 }
 
-function parse_layer(string $raw): array
+function parse_layer(string $raw, bool $allowUsers = true): array
 {
+    if (!$allowUsers && strpos($raw, 'user:') === 0) {
+        return ['type' => 'everyone', 'id' => ''];
+    }
     if (strpos($raw, 'role:') === 0) {
         $slug = sanitize_key(substr($raw, 5));
         if ($slug !== '' && get_role($slug)) {
@@ -156,10 +159,10 @@ function layer_list(array $stack): array
 }
 
 /** Layer switcher shown above both editors. */
-function render_layer_picker(string $tab, string $option, array $layer): void
+function render_layer_picker(string $tab, string $option, array $layer, bool $allowUsers = true): void
 {
     $all = layers_get($option);
-    $users = get_users(['number' => 500, 'orderby' => 'display_name', 'fields' => ['ID', 'display_name', 'user_login']]);
+    $users = $allowUsers ? get_users(['number' => 500, 'orderby' => 'display_name', 'fields' => ['ID', 'display_name', 'user_login']]) : [];
     $current = layer_param($layer);
     $changed = [];
     if ($all['everyone']) {
@@ -185,11 +188,13 @@ function render_layer_picker(string $tab, string $option, array $layer): void
                         <option value="<?php echo esc_attr('role:' . $slug); ?>" <?php selected($current, 'role:' . $slug); ?>><?php echo esc_html(translate_user_role($role['name'])); ?></option>
                     <?php endforeach; ?>
                 </optgroup>
+                <?php if ($users) : ?>
                 <optgroup label="One person">
                     <?php foreach ($users as $user) : ?>
                         <option value="<?php echo esc_attr('user:' . $user->ID); ?>" <?php selected($current, 'user:' . $user->ID); ?>><?php echo esc_html($user->display_name . ($user->display_name !== $user->user_login ? ' (' . $user->user_login . ')' : '')); ?></option>
                     <?php endforeach; ?>
                 </optgroup>
+                <?php endif; ?>
             </select>
             <noscript><button type="submit" class="button">Show</button></noscript>
         </form>
@@ -203,7 +208,7 @@ function render_layer_picker(string $tab, string $option, array $layer): void
     </div>
     <p class="lfa-layer-help"><?php
     if ($layer['type'] === 'everyone') {
-        echo 'These changes apply to everyone. Choose a role or a person above to change things just for them.';
+        echo $allowUsers ? 'These changes apply to everyone. Choose a role or a person above to change things just for them.' : 'These changes apply to everyone. Choose a role above to change things just for that role.';
     } elseif ($layer['type'] === 'role') {
         echo 'Changes for everyone with this role, on top of the Everyone changes. Anything left as “As above” follows Everyone.';
     } else {

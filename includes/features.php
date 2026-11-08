@@ -42,6 +42,30 @@ function features(): array
             'boot' => __NAMESPACE__ . '\\admin_bar_boot',
             'render' => __NAMESPACE__ . '\\render_admin_bar_tab',
         ],
+        'dashboard' => [
+            'label' => 'Dashboard',
+            'description' => 'Hide dashboard widgets and the welcome panel, and add a help box with your own text, for everyone or a role.',
+            'off' => 'The dashboard shows WordPress’s own widgets again. Your changes are kept.',
+            'files' => ['layers.php', 'dashboard.php'],
+            'boot' => __NAMESPACE__ . '\\dashboard_boot',
+            'render' => __NAMESPACE__ . '\\render_dashboard_tab',
+        ],
+        'notices' => [
+            'label' => 'Notices',
+            'description' => 'Gather admin notices behind one Notices button in the toolbar, and hide the Help tab, for everyone or a role.',
+            'off' => 'Notices show across the top of screens again. Your choices are kept.',
+            'files' => ['layers.php', 'notices.php'],
+            'boot' => __NAMESPACE__ . '\\notices_boot',
+            'render' => __NAMESPACE__ . '\\render_notices_tab',
+        ],
+        'login' => [
+            'label' => 'Login page',
+            'description' => 'Your logo, background and button colour on the log-in page, and where people land after logging in and out.',
+            'off' => 'The log-in page and redirects go back to WordPress’s own. Your settings are kept.',
+            'files' => ['colours.php', 'colours-settings.php', 'login.php'],
+            'boot' => __NAMESPACE__ . '\\login_boot',
+            'render' => __NAMESPACE__ . '\\render_login_tab',
+        ],
         'roles' => [
             'label' => 'User roles',
             'description' => 'Create, copy, rename and delete roles, and choose what each role is allowed to do.',
@@ -57,7 +81,6 @@ function features(): array
 function coming_features(): array
 {
     return [
-        '2.3' => 'Dashboard clean-up, notices, login page and brand colours',
         '2.4' => 'List columns and filters, page tree and profile pictures',
     ];
 }

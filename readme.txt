@@ -3,7 +3,7 @@ Contributors: Leapfrog Media
 Requires at least: 6.3
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.2.0
+Stable tag: 2.3.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,6 +35,16 @@ hides Leapfrog or Leapfrog Admin from yourself.
 Admin bar: hide toolbar items (in the admin and on the site), add your own links,
 and show a Bricks menu. The list of items fills in as administrators browse the
 admin and the site, because many items only appear on certain pages.
+
+== Dashboard, notices and login page ==
+Dashboard: hide widgets and the welcome panel, and add a help box with your own
+text, for everyone or a role. Notices: gather admin notices behind a Notices
+button in the toolbar and hide the Help tab, for everyone or a role. Login page:
+your logo, background and button colour (blank colours follow the admin colours),
+and where people land after logging in and out, for everyone or per role.
+
+On the Colours tab, Use Brand Colours fills in the main colours from Leapfrog
+Framework's brand colours; check the preview and save.
 
 == User roles ==
 Leapfrog > Leapfrog Admin > User roles lists every role and how many people have

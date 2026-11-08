@@ -77,6 +77,17 @@
         ['input', 'change'].forEach(event => field.addEventListener(event, () => { values[key] = field.value; render(); }));
     });
     render();
+    // "Use Brand Colours": fills the main colour fields from Leapfrog Framework; nothing is saved yet.
+    const brand = document.getElementById('lfa-brand-colours');
+    if (brand) {
+        brand.addEventListener('click', () => {
+            Object.entries(JSON.parse(brand.dataset.lfaBrand)).forEach(([key, value]) => {
+                const field = document.querySelector('[data-lfa-key="' + key + '"]');
+                if (field) $(field).wpColorPicker('color', value);
+            });
+            document.getElementById('lfa-brand-status').textContent = 'Brand colours filled in. Check the preview, change anything you like, then click Save Colours.';
+        });
+    }
     const file = document.getElementById('lfa-import-file');
     const json = document.getElementById('lfa-import-json');
     const status = document.getElementById('lfa-import-status');

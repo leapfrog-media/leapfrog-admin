@@ -100,6 +100,13 @@
 .lfa-links-table { max-width: 960px; border: 0; box-shadow: none; background: none; }
 .lfa-links-table td { padding: 4px 8px 4px 0; vertical-align: middle; }
 
+/* Dashboard and login tabs */
+.lfa-help-editor { max-width: 960px; box-sizing: border-box; }
+.lfa-media-preview { display: block; max-width: 240px; max-height: 120px; margin-bottom: 8px; padding: 8px; background: #f0f0f1; border: 1px solid #dcdcde; border-radius: 4px; object-fit: contain; }
+.lfa-media-preview[hidden] { display: none; }
+.lfa-brand-colours { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.lfa-brand-swatch { display: inline-block; width: 16px; height: 16px; border-radius: 50%; border: 1px solid rgba(0, 0, 0, .15); vertical-align: middle; }
+
 @media (max-width: 782px) {
     .lfa-cap-groups { columns: 1; }
     .lfa-role-actions { text-align: left; }

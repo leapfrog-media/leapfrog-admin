@@ -171,6 +171,25 @@ function import_settings(): void
     return_to_page('imported', ['tab' => 'colours']);
 }
 
+/**
+ * Brand colours from Leapfrog Framework (its lf_framework option), mapped to
+ * admin colours: primary → sidebar, accent → selected menu and badges,
+ * secondary → buttons. Empty when the Framework has no brand colours.
+ */
+function brand_colours(): array
+{
+    $framework = get_option('lf_framework', []);
+    $items = is_array($framework) ? (array) ($framework['colors']['items'] ?? []) : [];
+    $brand = [];
+    foreach ($items as $item) {
+        $key = is_array($item) ? (string) ($item['key'] ?? '') : '';
+        $hex = is_array($item) ? normalise_colour($item['value'] ?? '') : null;
+        if ($hex && in_array($key, ['primary', 'secondary', 'accent'], true)) { $brand[$key] = $hex; }
+    }
+    if (!isset($brand['primary'])) { return []; }
+    return array_filter(['navigation' => $brand['primary'], 'accent' => $brand['accent'] ?? '', 'action' => $brand['secondary'] ?? '']);
+}
+
 function render_colours_tab(): void
 {
     $values = colours();
@@ -189,6 +208,13 @@ function render_colours_tab(): void
                     <details class="lfa-panel" <?php if ($group === 'Main colours') { echo 'open'; } ?>>
                         <summary><?php echo esc_html($group); ?></summary>
                         <?php if ($group === 'Extra colours') : ?><p class="description">Leave a field blank to use its automatic colour. Clear a colour to return to Automatic.</p><?php endif; ?>
+                        <?php $brand = $group === 'Main colours' ? brand_colours() : []; if ($brand) : ?>
+                        <div class="lfa-brand-colours">
+                            <button type="button" class="button" id="lfa-brand-colours" data-lfa-brand="<?php echo esc_attr(wp_json_encode($brand)); ?>">Use Brand Colours</button>
+                            <span aria-hidden="true"><?php foreach ($brand as $hex) : ?><span class="lfa-brand-swatch" style="background:<?php echo esc_attr($hex); ?>"></span> <?php endforeach; ?></span>
+                            <p class="description" id="lfa-brand-status" role="status">From Leapfrog Framework: primary for the sidebar, accent for the selected menu and badges, secondary for buttons. Check the preview, change anything you like, then save.</p>
+                        </div>
+                        <?php endif; ?>
                         <div class="lfa-fields">
                         <?php foreach (fields() as $key => $field) : if ($field['group'] !== $group) { continue; } ?>
                             <div class="lfa-colour-field">
