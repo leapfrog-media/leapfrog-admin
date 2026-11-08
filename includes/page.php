@@ -79,6 +79,8 @@ function notices(): array
         'notices_saved' => 'Notices saved.',
         'notices_reset' => 'Notices changes removed for this layer.',
         'login_saved' => 'Login page saved.',
+        'columns_saved' => 'List columns saved.',
+        'columns_reset' => 'This list shows WordPress’s own columns again.',
     ];
 }
 
@@ -93,8 +95,39 @@ function errors(): array
         'menu_invalid' => 'The menu changes could not be read. Nothing was saved; please try again.',
         'menu_self_lock' => 'Not saved: this would hide Leapfrog or Leapfrog Admin from you. Hide it for other roles or people instead.',
         'bar_link' => 'Each link needs a name and a web address. Nothing was saved.',
+        'columns_type' => 'That list no longer exists. Nothing was saved.',
         'login_redirect' => 'A log-in or log-out address isn’t valid: start it with / or give a full web address. Nothing was saved.',
     ];
+}
+
+/**
+ * Put items in a saved order (admin menu, list columns). Items the order doesn't
+ * know (added by a plugin since) go after the item they followed originally.
+ */
+function sort_by_order(array $items, array $order, callable $idOf): array
+{
+    $byId = [];
+    $originalIds = [];
+    foreach ($items as $item) {
+        $id = (string) $idOf($item);
+        if (!isset($byId[$id])) {
+            $byId[$id] = $item;
+            $originalIds[] = $id;
+        }
+    }
+    $result = array_values(array_unique(array_filter(array_map('strval', $order), static function ($id) use ($byId) { return isset($byId[$id]); })));
+    $placed = array_flip($result);
+    foreach ($originalIds as $index => $id) {
+        if (isset($placed[$id])) { continue; }
+        $position = 0;
+        for ($j = $index - 1; $j >= 0; $j--) {
+            $found = array_search($originalIds[$j], $result, true);
+            if ($found !== false) { $position = $found + 1; break; }
+        }
+        array_splice($result, $position, 0, [$id]);
+        $placed[$id] = true;
+    }
+    return array_map(static function ($id) use ($byId) { return $byId[$id]; }, $result);
 }
 
 /** Tabs for the switched-on features, in order, then Features. */

@@ -3,7 +3,7 @@ Contributors: Leapfrog Media
 Requires at least: 6.3
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.3.0
+Stable tag: 2.4.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,13 @@ and where people land after logging in and out, for everyone or per role.
 
 On the Colours tab, Use Brand Colours fills in the main colours from Leapfrog
 Framework's brand colours; check the preview and save.
+
+== Lists, page tree and profile pictures ==
+List columns: for each list (Posts, Pages, …) reorder and remove columns, add ID
+and Last modified columns, and add category and tag filters. Page tree: Pages >
+Tree view, where you drag pages into order and under each other. Profile
+pictures: everyone can choose a picture from the Media Library on their profile
+instead of using Gravatar.
 
 == User roles ==
 Leapfrog > Leapfrog Admin > User roles lists every role and how many people have

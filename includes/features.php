@@ -66,6 +66,30 @@ function features(): array
             'boot' => __NAMESPACE__ . '\\login_boot',
             'render' => __NAMESPACE__ . '\\render_login_tab',
         ],
+        'list-columns' => [
+            'label' => 'List columns',
+            'description' => 'Show, hide and reorder columns in post and page lists, add ID and Last modified, and add category and tag filters.',
+            'off' => 'Lists show WordPress’s own columns again. Your choices are kept.',
+            'files' => ['list-columns.php'],
+            'boot' => __NAMESPACE__ . '\\list_columns_boot',
+            'render' => __NAMESPACE__ . '\\render_list_columns_tab',
+        ],
+        'page-tree' => [
+            'label' => 'Page tree',
+            'description' => 'A tree view of pages you can drag to reorder and to move pages under others.',
+            'off' => 'The Tree view links go. Pages stay in the order and places you gave them.',
+            'files' => ['page-tree.php'],
+            'boot' => __NAMESPACE__ . '\\page_tree_boot',
+            'render' => __NAMESPACE__ . '\\render_page_tree_tab',
+        ],
+        'avatars' => [
+            'label' => 'Profile pictures',
+            'description' => 'Choose a profile picture from the Media Library instead of using Gravatar.',
+            'off' => 'Everyone’s Gravatar shows again. The pictures people chose are kept.',
+            'files' => ['avatars.php'],
+            'boot' => __NAMESPACE__ . '\\avatars_boot',
+            'render' => __NAMESPACE__ . '\\render_avatars_tab',
+        ],
         'roles' => [
             'label' => 'User roles',
             'description' => 'Create, copy, rename and delete roles, and choose what each role is allowed to do.',
@@ -80,9 +104,7 @@ function features(): array
 /** Features planned for later versions, listed on the Features tab. */
 function coming_features(): array
 {
-    return [
-        '2.4' => 'List columns and filters, page tree and profile pictures',
-    ];
+    return [];
 }
 
 function disabled_features(): array
@@ -127,11 +149,12 @@ function render_features_tab(): void
         </table>
         <?php submit_button('Save Features'); ?>
     </form>
+    <?php if (coming_features()) : ?>
     <h2>Coming next</h2>
     <ul class="lfa-coming">
         <?php foreach (coming_features() as $version => $text) : ?>
             <li><strong><?php echo esc_html($version); ?></strong> <?php echo esc_html($text); ?></li>
         <?php endforeach; ?>
     </ul>
-    <?php
+    <?php endif;
 }

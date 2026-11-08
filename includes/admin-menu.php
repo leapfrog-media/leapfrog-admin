@@ -55,36 +55,6 @@ function merge_menu(array $stack): array
     return $merged;
 }
 
-/**
- * Put items in a saved order. Items the order doesn't know (a plugin installed
- * since) go after the item they followed in WordPress's own order.
- */
-function sort_by_order(array $items, array $order, callable $idOf): array
-{
-    $byId = [];
-    $originalIds = [];
-    foreach ($items as $item) {
-        $id = (string) $idOf($item);
-        if (!isset($byId[$id])) {
-            $byId[$id] = $item;
-            $originalIds[] = $id;
-        }
-    }
-    $result = array_values(array_unique(array_filter(array_map('strval', $order), static function ($id) use ($byId) { return isset($byId[$id]); })));
-    $placed = array_flip($result);
-    foreach ($originalIds as $index => $id) {
-        if (isset($placed[$id])) { continue; }
-        $position = 0;
-        for ($j = $index - 1; $j >= 0; $j--) {
-            $found = array_search($originalIds[$j], $result, true);
-            if ($found !== false) { $position = $found + 1; break; }
-        }
-        array_splice($result, $position, 0, [$id]);
-        $placed[$id] = true;
-    }
-    return array_map(static function ($id) use ($byId) { return $byId[$id]; }, $result);
-}
-
 /** Keep counters (comments waiting, plugin updates) when an item is renamed. */
 function title_with_badges(string $title, string $original): string
 {

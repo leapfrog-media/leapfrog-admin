@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.4.0 — 2026-11-08
+
+Lists and pages: the last milestone of the Leapfrog Admin plan.
+
+- **List columns** tab: for each list (Posts, Pages and other post types), drag columns into order, remove columns for everyone, and add **ID** and **Last modified** (with who last edited) columns, both sortable. Add drop-down filters for the list's categories and tags (shown once the taxonomy has terms). Columns appear in the editor once Leapfrog has seen the list (option `leapfrog_admin_columns_seen`). The tick box and Title always stay; Screen Options still works per person. Option `leapfrog_admin_columns`.
+- **Page tree**: Pages > Tree view (and a Tree view link above the Pages list), for every hierarchical post type. Drag to reorder and to move a page under another; Save Order changes only the parent and order of items that moved, without changing their "last modified" date or running save hooks. Pages you can't edit stay put.
+- **Profile pictures**: choose a profile picture from the Media Library on Users > Profile (administrators can set anyone's). It replaces Gravatar wherever WordPress shows that person's picture. User meta `lfa_avatar`.
+- The ordering helper used by the admin menu moved to `includes/page.php` so list columns can share it.
+
 ## 2.3.0 — 2026-11-08
 
 Dashboard, notices, login page and brand colours. Dashboard and Notices are set for everyone or a role.
