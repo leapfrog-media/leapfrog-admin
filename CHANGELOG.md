@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.3 — 2026-11-09
+
+- The Features tab comes first, and is the screen Leapfrog > Leapfrog Admin opens on.
+
 ## 2.6.2 — 2026-11-09
 
 - The shared Leapfrog menu orders Leapfrog Framework's Navigation Builder (formerly Header Builder) after Leapfrog Framework.

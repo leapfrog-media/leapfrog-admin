@@ -134,16 +134,15 @@ function sort_by_order(array $items, array $order, callable $idOf): array
     return array_map(static function ($id) use ($byId) { return $byId[$id]; }, $result);
 }
 
-/** Tabs for the switched-on features, in order, then Features. */
+/** Features first (the screen the page opens on), then the switched-on features in order, then Updates. */
 function tabs(): array
 {
-    $tabs = [];
+    $tabs = ['features' => ['label' => 'Features', 'render' => __NAMESPACE__ . '\\render_features_tab']];
     foreach (features() as $id => $feature) {
         if (feature_enabled($id)) {
             $tabs[$id] = ['label' => $feature['label'], 'render' => $feature['render']];
         }
     }
-    $tabs['features'] = ['label' => 'Features', 'render' => __NAMESPACE__ . '\\render_features_tab'];
     $tabs['updates'] = ['label' => 'Updates', 'render' => __NAMESPACE__ . '\\render_updates_tab'];
     return $tabs;
 }

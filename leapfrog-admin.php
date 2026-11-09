@@ -3,7 +3,7 @@
  * Plugin Name:       Leapfrog Admin
  * Plugin URI:        https://github.com/leapfrog-media/leapfrog-admin
  * Description:       The Leapfrog Media admin: colour scheme, toolbar icon, admin menu and admin bar editors, dashboard, notices, login page, list columns, page tree, profile pictures, code snippets and a user role editor, each switchable and many set per role. Leapfrog > Leapfrog Admin.
- * Version:           2.6.2
+ * Version:           2.6.3
  * Requires at least: 6.3
  * Requires PHP:      7.4
  * Author:            Leapfrog Media
@@ -19,7 +19,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-const VERSION = '2.6.2';
+const VERSION = '2.6.3';
 const FILE = __FILE__;
 
 /** Admin colour scheme id. Users who pick it get body.admin-color-leapfrog-admin. */
